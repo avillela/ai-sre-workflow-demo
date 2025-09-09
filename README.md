@@ -21,46 +21,41 @@ To update configurations after initial installation, run `goose configure` or `g
 
 2- Choose provider
 
-Under "What would you like to configure?" choose "Configure Providers", and select "Github Copilot". Follow the prompts on the screen.
+Under `What would you like to configure?` choose `Configure Providers`, and select `Github Copilot`. Follow the prompts on the screen.
 
-3- Add the Dynatrace MCP server
+3- Add extensions (MCP servers)
 
-[How to enable extensions](https://block.github.io/goose/docs/getting-started/using-extensions/).
+You can add the MCP servers (extensions, in Goose terminology) required by your project to the Goose [`config.yaml`](~/.config/goose/config.yaml) file.
 
-Add the following section under `extensions` in [`config.yaml`](~/.config/goose/config.yaml):
+For your conveniennce, the Goose [`config.yaml`](~/.config/goose/config.yaml) required to run this example is included in this repo. All you need to do is copy it over to the appropriate location by running:
 
-```yaml
-  dynatrace:
-    args:
-    - -y
-    - '@dynatrace-oss/dynatrace-mcp-server@v0.3.0'
-    available_tools: []
-    bundled: null
-    cmd: npx
-    description: null
-    enabled: true
-    env_keys: []
-    envs:
-      DT_API_TOKEN: <your_DT_api_token>
-      DT_ENVIRONMENT: <your_DT_environment>
-      OAUTH_CLIENT_ID: <your_OAuth_client>
-      OAUTH_CLIENT_SECRET: <your_OAuth_server>
-    name: Dynatrace MCP
-    timeout: 300
-    type: stdio
+```bash
+cp src/config/goose/config.yaml ~/.config/goose/config.yaml
 ```
 
-For more on Dynatrace MCP server configuration, including how to set up OAuth tokens, [check out the Dynatrace MCP server project on GitHub](https://github.com/dynatrace-oss/dynatrace-mcp).
+You also need to populate the environment variables required by the Dynatrace MCP server. To do so:
+
+```bash
+cp src/config/goose/.env.temmplate src/config/goose/.env
+```
+
+And fill out the values of the environment variables.
+
+MCP Servers used:
+
+1. [Dynatrace MCP Server](https://github.com/dynatrace-oss/dynatrace-mcp): interact with Dynatrace
+2. [GitHub MCP Server](https://github.com/github/github-mcp-server): interact with the GitHub API
+3. [CLI MCP Server](https://github.com/MladenSU/cli-mcp-server): allows for command line execution
 
 3- Start a new session & prompt away!
 
 Start a new session
 
 ```bash
-goose session
+export $(grep -v '^#' src/config/goose/.env | xargs) && goose session
 ```
 
-Enter your prompt(s) in the command line.
+Enter your prompt(s) in the command line. Example prompt
 
 ## Running recipes
 
@@ -69,13 +64,26 @@ Recipes are reusable prompts. Recipes in this repo live in [`recipes`](/recipes/
 To start a receipe:
 
 ```bash
-goose run --recipe src/recipes/<recipe_name>.yaml
+export $(grep -v '^#' src/config/goose/.env | xargs) && goose run --recipe src/recipes/<recipe_name>.yaml
 ```
 
 ## Prompts
 
 1. create a kind cluster called otel
 2. install argocd in the newly-created kind cluster 
+
+## Run this example
+
+```bash
+export $(grep -v '^#' src/config/goose/.env | xargs) && \
+  goose run --recipe src/recipes/k8s-setup.yaml
+
+export $(grep -v '^#' src/config/goose/.env | xargs) && \
+  goose run --recipe src/recipes/argo-admin.yaml \
+  --params argocd_password=$ARGOCD_PASSWORD \
+  --params argocd_url=$ARGOCD_URL \
+  --params argocd_username=$ARGOCD_USERNAME
+```
 
 ## High-level setup
 
@@ -85,11 +93,6 @@ goose run --recipe src/recipes/<recipe_name>.yaml
 4. Create a project
 5. Create recipe(s) for project
 
-### MCP Servers used:
-
-1. [Dynatrace MCP Server](https://github.com/dynatrace-oss/dynatrace-mcp): interact with Dynatrace
-2. [GitHub MCP Server](https://github.com/github/github-mcp-server): interact with the GitHub API
-3. [CLI MCP Server](https://github.com/MladenSU/cli-mcp-server): allows for command line execution
 
 ## Gotchas
 
