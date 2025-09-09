@@ -1,0 +1,10 @@
+version: 0.0.1
+title: Kubernetes Cluster Setup
+description: Deploy a k8s KinD cluster, install Argo CD, install the OTel Operator, deploy the OTel Demo, and query Dynatrace via MCP
+prompt: |
+ Create and configure a Kubernetes KinD cluster. Steps:
+ - Create a KinD cluster named "otel"
+ - Install ArgoCD. 
+ - Print a "DONE" message once the OpenTelemetry Operator pods are ready
+
+ Run the above tasks.

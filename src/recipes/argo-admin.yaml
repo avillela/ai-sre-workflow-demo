@@ -1,0 +1,11 @@
+version: 0.0.1
+title: ArgoCD setup
+description: Configure ArgoCD and deploy apps
+prompt: |
+ Configure ArgoCD and deploy ArgoCD applications. Steps:
+ - Get the argocd admin password
+ - Assign the decoded password to an environment variable called ARGOCD_TMP_ADMIN_PASSWORD
+ - Print the value of ARGOCD_TMP_ADMIN_PASSWORD on screen
+ - Install the argocd cli for linux in the ~/.local/bin directory.
+
+ Run the above tasks.
