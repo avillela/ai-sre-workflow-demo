@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: otel-demo
+  namespace: argocd
+spec:
+  project: otel
+  source:
+    repoURL: git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git
+    path: src/otel
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opentelemetry
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+    # automated:
+    #   prune: true
+    #   selfHeal: true

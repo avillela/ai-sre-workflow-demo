@@ -14,10 +14,9 @@ Goose's configuration files are located under `~/.config/goose`
 export $(dbus-launch)
 gnome-keyring-daemon --start --components=secrets
 echo "blah" | gnome-keyring-daemon -r --unlock --components=secret
-curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash
+goose configure
+# curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash
 ```
-
-To update configurations after initial installation, run `goose configure` or `goose-configure`.
 
 2- Choose provider
 
@@ -30,13 +29,13 @@ You can add the MCP servers (extensions, in Goose terminology) required by your 
 For your conveniennce, the Goose [`config.yaml`](~/.config/goose/config.yaml) required to run this example is included in this repo. All you need to do is copy it over to the appropriate location by running:
 
 ```bash
-cp src/config/goose/config.yaml ~/.config/goose/config.yaml
+cp src/goose/config/config.yaml ~/.config/goose/config.yaml
 ```
 
 You also need to populate the environment variables required by the Dynatrace MCP server. To do so:
 
 ```bash
-cp src/config/goose/.env.temmplate src/config/goose/.env
+cp src/goose/config/.env.temmplate src/goose/config/.env
 ```
 
 And fill out the values of the environment variables.
@@ -52,7 +51,7 @@ MCP Servers used:
 Start a new session
 
 ```bash
-export $(grep -v '^#' src/config/goose/.env | xargs) && goose session
+export $(grep -v '^#' src/goose/config/.env | xargs) && goose session
 ```
 
 Enter your prompt(s) in the command line. Example prompt
@@ -64,7 +63,7 @@ Recipes are reusable prompts. Recipes in this repo live in [`recipes`](/recipes/
 To start a receipe:
 
 ```bash
-export $(grep -v '^#' src/config/goose/.env | xargs) && goose run --recipe src/recipes/<recipe_name>.yaml
+export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/recipes/<recipe_name>.yaml
 ```
 
 ## Prompts
@@ -75,11 +74,11 @@ export $(grep -v '^#' src/config/goose/.env | xargs) && goose run --recipe src/r
 ## Run this example
 
 ```bash
-export $(grep -v '^#' src/config/goose/.env | xargs) && \
-  goose run --recipe src/recipes/k8s-setup.yaml
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/k8s-setup.yaml
 
-export $(grep -v '^#' src/config/goose/.env | xargs) && \
-  goose run --recipe src/recipes/argo-admin.yaml \
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/argo-admin.yaml \
   --params argocd_password=$ARGOCD_PASSWORD \
   --params argocd_url=$ARGOCD_URL \
   --params argocd_username=$ARGOCD_USERNAME
@@ -124,7 +123,7 @@ ERROR goose::session::storage: Failed to generate session description: Execution
 Then:
 
 ```bash
-mv ~/.local/config/goose ~/.local/config/goose-bak
+# mv ~/.config/goose ~/.config/goose-bak
 rm -rf ~/.local/share/keyrings
 mkdir -p ~/.local/share/keyrings
 touch ~/.local/share/keyrings/login.keyring

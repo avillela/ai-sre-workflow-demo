@@ -1,0 +1,27 @@
+version: 0.0.1
+title: 
+description: Deploy ArgoCD apps
+prompt: |
+ Deploy the OpenTelemetry Demo on Kubernetes. Steps:
+ - Create a kubernetes namespace called 
+ - Deploy the OpenTelemetry Collector YAML. The file is called 
+ - Install ArgoCD. 
+ - Install cert-manager. Wait until all pods are "running" before moving on.
+ - Install the OpenTelemetry Operator
+ - Print a "DONE" message once the OpenTelemetry Operator pods are ready
+
+response:
+  json_schema:
+    type: object
+    properties:
+      result:
+        type: string
+        description: "The main result of the task"
+      details:
+        type: array
+        items:
+          type: string
+        description: "Additional details of steps taken"
+    required:
+      - result
+      - status

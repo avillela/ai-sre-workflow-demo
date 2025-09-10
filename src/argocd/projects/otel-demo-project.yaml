@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: otel-demo-project
+  namespace: argocd
+spec:
+  description: OTel Demo App project
+
+  # Allowed Git repositories for this project
+  sourceRepos:
+    - git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git
+    - https://open-telemetry.github.io/opentelemetry-helm-charts
+    - https://charts.jetstack.io
+
+  # Allowed deployment destinations (clusters and namespaces)
+  destinations:
+    - namespace: '*'
+      server: '*'
+
+  # (Optional) Allow all cluster-scope resources
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"

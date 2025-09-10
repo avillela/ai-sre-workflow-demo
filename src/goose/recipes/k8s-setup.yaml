@@ -1,0 +1,26 @@
+version: 0.0.1
+title: Kubernetes Cluster Setup
+description: Deploy a k8s KinD cluster, and install Argo CD
+prompt: |
+ Create and configure a Kubernetes KinD cluster. Steps:
+ - Create a KinD cluster named "otel"
+ - Install ArgoCD. CAll pods must be in "running" status before moving on to next step.
+ - Print a "DONE" message upon completion of above tasks.
+
+ Run the above tasks, listing out the commands invoked at each step.
+
+response:
+  json_schema:
+    type: object
+    properties:
+      result:
+        type: string
+        description: "The main result of the task"
+      details:
+        type: array
+        items:
+          type: string
+        description: "Additional details of steps taken"
+    required:
+      - result
+      - status

@@ -1,0 +1,44 @@
+version: 0.0.1
+title: ArgoCD setup
+description: Update the ArgoCD password and set up port-forwarding
+instructions: "Execute the steps below, and confirm when each command has been executed."
+parameters:
+  - key: argocd_password
+    input_type: string
+    requirement: required
+    description: "ArgoCD password"
+  - key: argocd_url
+    input_type: string
+    requirement: required
+    description: "ArgoCD URL"
+  - key: argocd_username
+    input_type: string
+    requirement: required
+    description: "ArgoCD username"
+  # - key: ssh_pk_path
+  #   input_type: string
+  #   requirement: required
+  #   description: "SSH private key path"
+prompt: |
+ Configure and deploy apps to argocd. Steps:
+ - Login to argocd via the argocd cli
+ - Run the command kubectl apply -f src/otel/namespace.yaml
+ - Run the script ./src/scripts/argocd-setup.sh
+
+ Execute the above steps.
+
+response:
+  json_schema:
+    type: object
+    properties:
+      result:
+        type: string
+        description: "The main result of the task"
+      details:
+        type: array
+        items:
+          type: string
+        description: "Additional details of steps taken"
+    required:
+      - result
+      - status

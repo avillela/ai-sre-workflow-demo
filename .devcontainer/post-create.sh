@@ -56,3 +56,4 @@ eval $(dbus-launch)
 export $(dbus-launch)
 gnome-keyring-daemon --start --components=secrets
 echo "blah" | gnome-keyring-daemon -r --unlock --components=secret
+curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash

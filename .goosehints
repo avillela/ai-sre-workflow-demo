@@ -6,6 +6,10 @@ Always use version v0.124.0 of the OpenTelemetry Operator.
 
 Always use version v3.1.4 of ArgoCD.
 
+Always create an argocd namespace before installing argocd in kubernetes.
+
+Always use the --insecure option when using the argocd CLI.
+
 Upon installing ArgoCD check to make sure that pod status is "running" for all pods in the argocd namespace before proceeding to the next step.
 
 The ArgoCD admin password secret is located in the argocd namespace. When retrieving the ArgoCD password, it should be base64 decoded.

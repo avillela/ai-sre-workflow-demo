@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: otel-demo-project
+  source:
+    repoURL: 'https://charts.jetstack.io'
+    targetRevision: v1.15.1
+    # targetRevision: v1.14.3
+    chart: cert-manager
+    helm:
+      parameters:
+        - name: crds.enabled
+          value: 'true'
+        - name: startupapicheck.timeout
+          value: 5m
+        - name: namespace
+          value: cert-manager
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

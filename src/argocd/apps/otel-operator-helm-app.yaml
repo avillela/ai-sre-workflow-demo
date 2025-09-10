@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: otel-operator
+  namespace: argocd
+spec:
+  project: otel-demo-project
+  source:
+    repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+    # View helm chart versions and corresponding Operator versions: helm search repo opentelemetry-operator --versions
+    targetRevision: 0.93.1 # for Operator version 0.131.0
+    # targetRevision: 0.88.7 # for Operator version 0.124.0
+    chart: opentelemetry-operator
+    helm:
+      parameters:
+        - name: manager.collectorImage.repository
+          value: otel/opentelemetry-collector-k8s
+        - name: admissionWebhooks.certManager.enabled
+          value: 'true'
+        - name: admissionWebhooks.autoGenerateCert.enabled
+          value: 'false'
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opentelemetry-operator-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
