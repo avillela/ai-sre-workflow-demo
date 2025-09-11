@@ -51,10 +51,15 @@ MCP Servers used:
 Start a new session
 
 ```bash
+# Load environment variables to make them available to Goose, and then start Goose session
 export $(grep -v '^#' src/goose/config/.env | xargs) && goose session
 ```
 
-Enter your prompt(s) in the command line. Example prompt
+Enter your prompt(s) in the command line. Example prompt:
+
+```text
+How many folders do I have under the current directory? 
+```
 
 ## Running recipes
 
@@ -74,14 +79,31 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/r
 ## Run this example
 
 ```bash
+
+# Create k8s cluster and install ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/k8s-setup.yaml
 
+# Change ArgoCD password, update admin password, and set up Argo env
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/argo-admin.yaml \
   --params argocd_password=$ARGOCD_PASSWORD \
   --params argocd_url=$ARGOCD_URL \
   --params argocd_username=$ARGOCD_USERNAME
+
+# Deploy the OTel Demo app
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/argo-apps-deploy.yaml \
+  --params argocd_password=$ARGOCD_PASSWORD \
+  --params argocd_url=$ARGOCD_URL \
+  --params argocd_username=$ARGOCD_USERNAME \
+  --params ssh_pk_path=$SSH_PK_PATH \
+  --params dt_api_token=$DT_API_TOKEN \
+  --params dt_otlp_endpoint=$DT_OTLP_ENDPOINT
+
+# Query Dynatrace using natural language
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/dynatrace.yaml
 ```
 
 ## High-level setup
@@ -123,7 +145,6 @@ ERROR goose::session::storage: Failed to generate session description: Execution
 Then:
 
 ```bash
-# mv ~/.config/goose ~/.config/goose-bak
 rm -rf ~/.local/share/keyrings
 mkdir -p ~/.local/share/keyrings
 touch ~/.local/share/keyrings/login.keyring
@@ -137,13 +158,15 @@ goose configure
 
 Follow same instructions to configure GitHub Copiolot with Goose.
 
-Then re-add your previous [config.yaml](~/.config/goose/config.yaml) back:
+4- Unreferenced paramters
 
-```bash
-cp ~/.config/goose-bak/config.yaml ~/.config/goose/config.yaml
-rm -rf ~/.config/goose-bak
+If a recipe defines parameters, but they're not referenced anywhere in the prompt or instructions, then Goose will print out an error message like this:
+
+```text
+Error: Template rendering failed: 
+Unnecessary parameter definitions: argocd_url, argocd_username, argocd_password.
 ```
-
+Solution: remove unnecessary parameter definitions from the recipe YAML.
 
 ## Resources
 

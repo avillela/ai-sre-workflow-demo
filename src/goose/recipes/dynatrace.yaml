@@ -1,0 +1,24 @@
+version: 0.0.1
+title: Dynatrace natural language prompts
+description: Ask Dynatrace about OTel Demo App data using natural language prompts
+prompt: |
+ - How many unique services are running in Dynatrace? 
+ - List all of the logs under the most recent trace_id 
+ - What’s the average response time for the currency service? 
+ - What does this DQL query do: timeseries { sum(app_recommendations_counter), value.A = avg(app_recommendations_counter, scalar: true) } 
+
+response:
+  json_schema:
+    type: object
+    properties:
+      result:
+        type: string
+        description: "The main result of the task"
+      details:
+        type: array
+        items:
+          type: string
+        description: "Additional details of steps taken"
+    required:
+      - result
+      - status

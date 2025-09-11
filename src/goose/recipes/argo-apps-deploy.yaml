@@ -1,14 +1,42 @@
 version: 0.0.1
 title: 
 description: Deploy ArgoCD apps
+instructions: "Execute the steps below, and confirm when each command has been executed."
+parameters:
+  - key: argocd_url
+    input_type: string
+    requirement: required
+    description: "ArgoCD URL"
+  - key: argocd_username
+    input_type: string
+    requirement: required
+    description: "ArgoCD username"
+  - key: argocd_password
+    input_type: string
+    requirement: required
+    description: "ArgoCD password"
+  - key: ssh_pk_path
+    input_type: string
+    requirement: required
+    description: "Path to SSH private key"
+  - key: dt_api_token
+    input_type: string
+    requirement: required
+    description: "Dynatrace API token"
+  - key: dt_otlp_endpoint
+    input_type: string
+    requirement: required
+    description: "Dynatrace OTLP endpoint configuration for the OTel Collector"
+
+
 prompt: |
  Deploy the OpenTelemetry Demo on Kubernetes. Steps:
- - Create a kubernetes namespace called 
- - Deploy the OpenTelemetry Collector YAML. The file is called 
- - Install ArgoCD. 
- - Install cert-manager. Wait until all pods are "running" before moving on.
- - Install the OpenTelemetry Operator
- - Print a "DONE" message once the OpenTelemetry Operator pods are ready
+ - Log in to argocd using the argocd CLI using URL {{ argocd_url }}, username {{ argocd_username }} and password {{ argocd_password }}
+ - Run the script ./src/scripts/argocd-setup.sh, passing in {{ ssh_pk_path }}
+ - Run the script ./src/scripts/otel-demo-deploy.sh, passing in {{ dt_api_token }} and {{ dt_otlp_endpoint }}
+ - If argocd reports an 'OutOfSync' error on the previous step, re-apply argocd app sync otel-demo
+
+ Execute the above steps.
 
 response:
   json_schema:

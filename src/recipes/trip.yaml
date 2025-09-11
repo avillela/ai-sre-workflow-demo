@@ -1,9 +1,0 @@
-# Sample recipe to test out Goose recipes
-title: Trip planner
-description: Plan your next trip
-prompt: |
- Help the user plan a trip to Europe for 14 days. Create a detailed itinerary that includes:
-  - places to visit
-  - activities to do
-  - local cuisine to try
-  - a rough budget estimate
