@@ -1,0 +1,33 @@
+version: 0.0.1
+title: Testing stuff
+description: Update the ArgoCD password, and set up port-forwarding
+instructions: "Execute the steps below, and confirm when each command has been executed."
+prompt: |
+ Print out the value of ARGOCD_USERNAME, ARGOCD_BASE_URL, and ARGOCD_PASSWORD
+
+ Run the steps below and show me the commands you ran:
+  - Log in to argocd using the argocd CLI using the --insecure flag:
+   - Use URL ARGOCD_BASE_URL, username ARGOCD_USERNAME, and password ARGOCD_TMP_ADMIN_PASSWORD
+   - If the login fails, try using password ARGOCD_PASSWORD instead.
+ - Using the argocd CLI, update the argocd password using the --insecure flag:
+   - Current password: ARGOCD_TMP_ADMIN_PASSWORD. New password: ARGOCD_PASSWORD. Username: ARGOCD_USERNAME and the URL is ARGOCD_BASE_URL. Print out the command used.
+   - If password change fails try using the password ARGOCD_PASSWORD instead.
+
+
+ You have my permission to execute the above steps. Return the results and status via final_output as pretty-printed json.
+
+response:
+  json_schema:
+    type: object
+    properties:
+      result:
+        type: string
+        description: "The main result of the task"
+      details:
+        type: array
+        items:
+          type: string
+        description: "Additional details of steps taken"
+    required:
+      - result
+      - status

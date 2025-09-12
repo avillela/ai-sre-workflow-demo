@@ -1,6 +1,6 @@
 #!/bin/bash
 
-argocd login $ARGOCD_URL --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure  
+argocd login $ARGOCD_BASE_URL --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure  
 
 argocd app delete otel-demo -y
 argocd app delete otel-operator -y

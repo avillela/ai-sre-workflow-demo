@@ -1,9 +1,5 @@
 If helm isn't available to install a Kubernetes operator, use kubectl instead.
 
-Always use version v1.14.3 of cert-manager.
-
-Always use version v0.124.0 of the OpenTelemetry Operator.
-
 Always use version v3.1.4 of ArgoCD.
 
 Always create an argocd namespace before installing argocd in kubernetes.

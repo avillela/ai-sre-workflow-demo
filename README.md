@@ -86,16 +86,13 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Change ArgoCD password, update admin password, and set up Argo env
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/argo-admin.yaml \
-  --params argocd_password=$ARGOCD_PASSWORD \
-  --params argocd_url=$ARGOCD_URL \
-  --params argocd_username=$ARGOCD_USERNAME
+  goose run --recipe src/goose/recipes/argo-admin.yaml
 
 # Deploy the OTel Demo app
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/argo-apps-deploy.yaml \
   --params argocd_password=$ARGOCD_PASSWORD \
-  --params argocd_url=$ARGOCD_URL \
+  --params argocd_base_url=$ARGOCD_BASE_URL \
   --params argocd_username=$ARGOCD_USERNAME \
   --params ssh_pk_path=$SSH_PK_PATH \
   --params dt_api_token=$DT_API_TOKEN \
@@ -164,7 +161,7 @@ If a recipe defines parameters, but they're not referenced anywhere in the promp
 
 ```text
 Error: Template rendering failed: 
-Unnecessary parameter definitions: argocd_url, argocd_username, argocd_password.
+Unnecessary parameter definitions: argocd_base_url, argocd_username, argocd_password.
 ```
 Solution: remove unnecessary parameter definitions from the recipe YAML.
 

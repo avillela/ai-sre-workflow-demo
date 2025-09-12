@@ -44,5 +44,15 @@
       "envFile": "${workspaceFolder}/.env"
     },
 
+    "argocd-mcp-stdio": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "argocd-mcp@latest",
+        "stdio"
+      ],
+      "envFile": "${workspaceFolder}/.env"
+    }
+    
   }
 }

@@ -3,7 +3,7 @@ title:
 description: Deploy ArgoCD apps
 instructions: "Execute the steps below, and confirm when each command has been executed."
 parameters:
-  - key: argocd_url
+  - key: argocd_base_url
     input_type: string
     requirement: required
     description: "ArgoCD URL"
@@ -31,7 +31,7 @@ parameters:
 
 prompt: |
  Deploy the OpenTelemetry Demo on Kubernetes. Steps:
- - Log in to argocd using the argocd CLI using URL {{ argocd_url }}, username {{ argocd_username }} and password {{ argocd_password }}
+ - Log in to argocd using the argocd CLI using URL {{ argocd_base_url }}, username {{ argocd_username }} and password {{ argocd_password }}
  - Run the script ./src/scripts/argocd-setup.sh, passing in {{ ssh_pk_path }}
  - Run the script ./src/scripts/otel-demo-deploy.sh, passing in {{ dt_api_token }} and {{ dt_otlp_endpoint }}
  - If argocd reports an 'OutOfSync' error on the previous step, re-apply argocd app sync otel-demo

@@ -16,7 +16,7 @@
     ],
     "hostRequirements": {
       "cpus": 4,
-      "memory": "16gb",
+      "memory": "32gb",
       "storage": "16gb"
     },
     "remoteEnv": {

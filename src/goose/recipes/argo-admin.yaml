@@ -1,44 +1,40 @@
 version: 0.0.1
 title: ArgoCD setup
-description: Update the ArgoCD password, and set up port-forwarding
-instructions: "Execute the steps below, and confirm when each command has been executed."
-parameters:
-  - key: argocd_password
-    input_type: string
-    requirement: required
-    description: "ArgoCD password"
-  - key: argocd_url
-    input_type: string
-    requirement: required
-    description: "ArgoCD URL"
-  - key: argocd_username
-    input_type: string
-    requirement: required
-    description: "ArgoCD username"
+description: Set up port-forwarding and update the ArgoCD password from the initial password.
+# instructions: "Execute the steps below, and confirm when each command has been executed."
 prompt: |
- Configure ArgoCD and deploy ArgoCD applications. Steps:
- - Get the argocd admin password
- - Assign the decoded password to an environment variable called ARGOCD_TMP_ADMIN_PASSWORD
- - Print the value of ARGOCD_TMP_ADMIN_PASSWORD on the console.
- - Check if $HOME/.local/bin/argocd exists. Let me know if argocd cli is already installed. If not, install the argocd cli for linux in the $HOME/.local/bin directory.
- - Check if a port-forward exists on port 9001. If not, create a port-forward on 9001 for {{ argocd_url }}. If no response after 30s move on to the next task.
- - Log in to argocd using the argocd CLI using URL {{ argocd_url }}
- - Using the argocd CLI, update the argocd password from the old one stored in ARGOCD_TMP_ADMIN_PASSWORD, to a new one stored in the environment variable {{ argocd_password }}. The username is {{ argocd_username }} and the URL is {{ argocd_url }}. If this step fails, try logging in with {{ argocd_password }}
+ Configure ArgoCD and deploy ArgoCD applications. 
+ 
+ Run the steps below and confirm when each command has been executed. Also list the output of each command:
+ - Install the argocd cli:
+   - Check if $HOME/.local/bin/argocd exists. Let me know if argocd cli is already installed. 
+   - If not, install the argocd cli for linux in the $HOME/.local/bin directory. 
+ - Check if a port-forward exists on port 9001. If not, create a port-forward by running src/scripts/port-forward.sh
+ - Run this script: src/scripts/argocd-password-update.sh $ARGOCD_BASE_URL $ARGOCD_USERNAME $ARGOCD_PASSWORD > src/scripts/scripts.log
 
- You have my permission to execute the above steps.
+ You have my permission to execute the above steps. Summarize the results, and also return the results and status via final_output.
 
-response:
-  json_schema:
-    type: object
-    properties:
-      result:
-        type: string
-        description: "The main result of the task"
-      details:
-        type: array
-        items:
-          type: string
-        description: "Additional details of steps taken"
-    required:
-      - result
-      - status
+retry:
+  max_retries: 3
+  timeout_seconds: 30
+  checks:
+    - type: shell
+      command: "echo 'Task validation check passed'"
+  on_failure: "echo 'Retry attempt failed, cleaning up...'"
+
+
+# response:
+#   json_schema:
+#     type: object
+#     properties:
+#       result:
+#         type: string
+#         description: "The main result of the task"
+#       details:
+#         type: array
+#         items:
+#           type: string
+#         description: "Additional details of steps taken"
+#     required:
+#       - result
+#       - status
