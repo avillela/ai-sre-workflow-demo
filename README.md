@@ -82,25 +82,31 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/r
 
 # Create k8s cluster and install ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/k8s-setup.yaml
+  goose run --recipe src/goose/recipes/01-k8s-setup.yaml
 
-# Change ArgoCD password, update admin password, and set up Argo env
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/argo-admin.yaml
+  goose run --recipe src/goose/recipes/02-argo-bootstrap.yaml
 
-# Deploy the OTel Demo app
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/argo-apps-deploy.yaml \
-  --params argocd_password=$ARGOCD_PASSWORD \
-  --params argocd_base_url=$ARGOCD_BASE_URL \
-  --params argocd_username=$ARGOCD_USERNAME \
-  --params ssh_pk_path=$SSH_PK_PATH \
-  --params dt_api_token=$DT_API_TOKEN \
-  --params dt_otlp_endpoint=$DT_OTLP_ENDPOINT
+  goose run --recipe src/goose/recipes/03-argo-api-token.yaml
 
-# Query Dynatrace using natural language
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/dynatrace.yaml
+  goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/05-dynatrace-prompts.yaml
+
+
+# Execute individual sub-recipes (for testing)
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml
+
 ```
 
 ## High-level setup

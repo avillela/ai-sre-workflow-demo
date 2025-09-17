@@ -1,0 +1,24 @@
+version: 1.0.0
+title: Generate ArgoCD API token
+description: Generate an ArgoCD API token for the admin account
+instructions: The task involves configuring access to an ArgoCD server. Specific capabilities (e.g., apiKey) are enabled by patching the ArgoCD ConfigMap, with proper validation of server states and environment readiness throughout the process.
+prompt: |
+  Run this to enable argocd to generate api token. Patch the argocd-cm configmap in the argocd namespace as type merge, adding {"data": {"accounts.admin": "apiKey"}}. Restart the argocd-server. Once the argocd-server is in "running" status, this task is complete.
+
+  Summarize results.
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+activities:
+- Patch ArgoCD config for account capabilities
+- Generate an ArgoCD API token
+- Validate and restart ArgoCD server
+author:
+  contact: vscode

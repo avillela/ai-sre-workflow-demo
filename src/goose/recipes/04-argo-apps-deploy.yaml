@@ -1,0 +1,23 @@
+version: 1.0.0
+title: 
+description: Deploy ArgoCD apps
+instructions: "This task includes steps to run scripts to enable the deployment of the OpenTelemetry Demo App using ArgoCD. Execute the steps below, and confirm when each command has been executed."
+
+sub_recipes:
+  - name: "argo_repo_proj_setup"
+    path: "./sub_recipes/argo-repo-proj-setup.yaml"
+    values:
+      ssh_pk_path: "~/.ssh/id_ed25519"
+  - name: "deply_otel_demo"
+    path: "./sub_recipes/deploy-otel-demo.yaml"
+
+prompt: |
+ Deploy the OpenTelemetry Demo on Kubernetes. Run the sub-recipes in this order: argo_repo_proj_setup, deply_otel_demo. Summarize results after each sub-recipe executes, and then summarize overall results.
+
+activitiew:
+- Login via CLI
+- Run sub-recipes
+- Use environment variables
+
+author:
+  contact: avillela

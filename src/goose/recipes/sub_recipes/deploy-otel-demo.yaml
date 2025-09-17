@@ -1,0 +1,26 @@
+version: 1.0.0
+title: Deploy the OTel Demo App
+description: Deploy the OTel Demo app managed by ArgoCD.
+instructions: Execute system-level scripts and automation tasks, ensuring environment variables are correctly passed and required scripts are made executable. Extract operation logs in a concise format, focusing on critical task outcomes, such as resource creation and status synchronization. Use specific tools like shell commands while adhering to predefined standards for managing Kubernetes resources and configurations.
+prompt: |
+  Execute script ./src/scripts/otel-demo-deploy.sh, passing in the value of the environment variables DT_API_TOKEN and DT_OTLP_ENDPOINT as the first and second parameters, respectively. If argocd reports an 'OutOfSync' error on the previous step, re-apply argocd app sync otel-demo.
+
+  Summarize the results.
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+activities:
+- Run Kubernetes setup scripts
+- Check resource synchronization status
+- Pass environment variables to scripts
+- Parse and summarize deployment outputs
+- Handle permissions and annotations for resources
+author:
+  contact: avillela

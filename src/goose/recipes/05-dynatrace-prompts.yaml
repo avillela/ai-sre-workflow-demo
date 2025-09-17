@@ -1,0 +1,42 @@
+version: 1.0.0
+title: Dynatrace prompts
+description: Natural language prompts for the dynatrace MCP server.
+instructions: Using Dynatrace MCP server, execute the prompts below.
+prompt: |
+ Execute the following prompts.
+ - List the 5 most recent traces
+ - What is the average response time for the currency service?
+ - List log messages for the most recent trace
+ - List all of the unique services in my dynatrace environment
+
+ 
+
+extensions:
+- type: stdio
+  name: Dynatrace MCP
+  cmd: npx
+  args:
+  - -y
+  - '@dynatrace-oss/dynatrace-mcp-server@v0.4.0'
+  envs: {}
+  env_keys: []
+  timeout: 300
+  description: null
+  bundled: null
+  available_tools: []
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+# activities:
+# - List all services run
+# - Retrieve average response time
+# - Fetch service logs
+# - Analyze trace details
+# - Summarize usage metrics
+author:
+  contact: avillela

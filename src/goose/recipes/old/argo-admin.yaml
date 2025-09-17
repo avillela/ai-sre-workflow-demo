@@ -9,7 +9,7 @@ prompt: |
  - Install the argocd cli:
    - Check if $HOME/.local/bin/argocd exists. Let me know if argocd cli is already installed. 
    - If not, install the argocd cli for linux in the $HOME/.local/bin directory. 
- - Check if a port-forward exists on port 9001. If not, create a port-forward by running src/scripts/port-forward.sh
+ - Check if a port-forward exists on port 9080. If not, create a port-forward by running src/scripts/port-forward.sh
  - Run this script: src/scripts/argocd-password-update.sh $ARGOCD_BASE_URL $ARGOCD_USERNAME $ARGOCD_PASSWORD > src/scripts/scripts.log
 
  You have my permission to execute the above steps. Summarize the results, and also return the results and status via final_output.

@@ -1,0 +1,26 @@
+version: 0.0.1
+title: Testing argocd mcp
+description: Test argocd mcp
+instructions: "Execute the steps below, and confirm when each command has been executed."
+prompt: |
+  How many projects do I have in argocd. If the mcp server fails to fetch info, provide me with possible reasons for the failure. Let me know what the correct syntax is for the api server endpoint
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+- type: stdio
+  name: argocd
+  cmd: npx
+  args:
+  - argocd-mcp@v0.3.0
+  - stdio
+  env_keys: []
+  timeout: 300
+  description: null
+  bundled: null
+  available_tools: []
