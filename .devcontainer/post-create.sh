@@ -18,8 +18,8 @@ pip install uv
 ### Install gcloud CLI
 ### -------------------
 
-# I am installing it here instead of via devcontainer feature
-# because I can't install gke-gcloud-auth-plugin if gcloud is installed that way.
+## I am installing it here instead of via devcontainer feature
+## because I can't install gke-gcloud-auth-plugin if gcloud is installed that way.
 # sudo apt-get update && sudo apt-get install -y apt-transport-https gnupg curl lsb-release
 # export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
 #   echo "cloud SDK repo: $CLOUD_SDK_REPO" && \
@@ -57,24 +57,3 @@ gnome-keyring-daemon --start --components=secrets
 echo "blah" | gnome-keyring-daemon -r --unlock --components=secret
 
 curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash
-
-# mkdir -p ~/.local/share/keyrings
-# touch ~/.local/share/keyrings/login.keyring
-# eval $(dbus-launch)
-# gnome-keyring-daemon --start --components=secrets
-# # GNOME_KEYRING_CONTROL=/home/vscode/.cache/keyring-J4M2B3
-# export $(dbus-launch)
-# echo "blah" | gnome-keyring-daemon -r --unlock --components=secret
-
-# # gnome-keyring-daemon -r --unlock --components=secrets
-
-# # sudo service dbus start
-# # mkdir -p /var/run/dbus
-# # eval $(dbus-launch)
-# # gnome-keyring-daemon --start --components=secrets
-
-
-# service --status-all
-# # export $(dbus-launch)
-
-# # curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | bash

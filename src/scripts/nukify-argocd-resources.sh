@@ -7,7 +7,7 @@ argocd app delete otel-operator -y
 argocd app delete cert-manager -y
 
 argocd proj delete otel-demo-project
-argocd repo rm git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git
+argocd repo rm git@github.com:avillela/ai-sre-workflow-demo.git
 
 kubectl delete ns otel-demo
 kubectl delete ns opentelemetry-operator-system

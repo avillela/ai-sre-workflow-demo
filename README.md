@@ -6,6 +6,21 @@ See [quick start guide](https://block.github.io/goose/docs/quickstart/).
 
 Goose's configuration files are located under `~/.config/goose`
 
+## High-level setup
+
+1. Install Goose
+2. Configure Goose with GitHub Copilot as provider
+3. Configure MCP servers (extensions)
+4. Create a project
+5. Create recipe(s) for project
+
+MCP Servers used:
+
+1. [Developer Extension (built-in Goose extension for command-line execution)](https://block.github.io/goose/docs/mcp/developer-mcp/)
+2. [Dynatrace MCP Server](https://github.com/dynatrace-oss/dynatrace-mcp): interact with Dynatrace
+3. [ArgoCD MCP Server](https://github.com/akuity/argocd-mcp): create and list applications (FWIW, this wasn't super helpful to the overall workflow, so it wasn't used in the final solution)
+
+
 ## Setup
 
 1- Download and install Goose
@@ -14,8 +29,7 @@ Goose's configuration files are located under `~/.config/goose`
 export $(dbus-launch)
 gnome-keyring-daemon --start --components=secrets
 echo "blah" | gnome-keyring-daemon -r --unlock --components=secret
-goose configure
-# curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash
+curl -fsSL https://github.com/block/goose/releases/download/v1.7.0/download_cli.sh | bash
 ```
 
 2- Choose provider
@@ -40,12 +54,6 @@ cp src/goose/config/.env.temmplate src/goose/config/.env
 
 And fill out the values of the environment variables.
 
-MCP Servers used:
-
-1. [Dynatrace MCP Server](https://github.com/dynatrace-oss/dynatrace-mcp): interact with Dynatrace
-2. [GitHub MCP Server](https://github.com/github/github-mcp-server): interact with the GitHub API
-3. [CLI MCP Server](https://github.com/MladenSU/cli-mcp-server): allows for command line execution
-
 3- Start a new session & prompt away!
 
 Start a new session
@@ -65,18 +73,15 @@ How many folders do I have under the current directory?
 
 Recipes are reusable prompts. Recipes in this repo live in [`recipes`](/recipes/). There's a sample starter recipe from the Goose docs called `trip.yaml`.
 
-To start a receipe:
+To run the sample recipe:
 
 ```bash
-export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/recipes/<recipe_name>.yaml
+export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/recipes/trip.yaml
 ```
 
-## Prompts
+## Run the workflow
 
-1. create a kind cluster called otel
-2. install argocd in the newly-created kind cluster 
-
-## Run this example
+The commands below run the Goose recipes for bootstrapping Kubernetes (KinD) and ArgoCD, deploying the OTel Demo, and running natural language prompts to query OTel Demo data in Dynatrace.
 
 ```bash
 
@@ -84,20 +89,23 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && goose run --recipe src/r
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/01-k8s-setup.yaml
 
+# Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/02-argo-bootstrap.yaml
 
+# Generate ArgoCD API token (to use ArgoCD MCP server)
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/03-argo-api-token.yaml
 
+# Deploy OTel Demo to k8s via ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml
 
+# Query OTel data in Dynatrace using natural language prompts
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/05-dynatrace-prompts.yaml
 
-
-# Execute individual sub-recipes (for testing)
+# FOR TESTING: Sub-recipes
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
 
@@ -107,16 +115,9 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml
 
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe  src/goose/recipes/sub_recipes/argo-mcp-test.yaml
 ```
-
-## High-level setup
-
-1. Install Goose
-2. Configure Goose with GitHub Copilot as provider
-3. Configure MCP servers (extensions)
-4. Create a project
-5. Create recipe(s) for project
-
 
 ## Gotchas
 

@@ -1,0 +1,30 @@
+version: 0.0.1
+title: Testing argocd mcp
+description: Test argocd mcp
+instructions: "Execute the steps below, and confirm when each command has been executed."
+prompt: |
+  How many applications do I have in argocd?
+
+  Create an argocd application called cert-manager v1.15.1 (using helm) in the otel-demo project and deploy it to the same cluster argocd is running
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+- type: stdio
+  name: argocd
+  cmd: npx
+  args:
+  - argocd-mcp@v0.3.0
+  - stdio
+  env_keys: []
+  envs:
+    ARGOCD_BASE_URL: "https://127.0.0.1:9080"
+  timeout: 300
+  description: null
+  bundled: null
+  available_tools: []

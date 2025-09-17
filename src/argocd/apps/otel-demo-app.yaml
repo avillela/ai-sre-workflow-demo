@@ -6,9 +6,9 @@ metadata:
 spec:
   project: otel-demo-project
   source:
-    repoURL: git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git
+    repoURL: git@github.com:avillela/ai-sre-workflow-demo.git
     path: src/otel
-    targetRevision: development
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
     namespace: otel-demo

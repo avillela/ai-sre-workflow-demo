@@ -8,7 +8,7 @@ spec:
 
   # Allowed Git repositories for this project
   sourceRepos:
-    - git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git
+    - git@github.com:avillela/ai-sre-workflow-demo.git
     - https://open-telemetry.github.io/opentelemetry-helm-charts
     - https://charts.jetstack.io
 

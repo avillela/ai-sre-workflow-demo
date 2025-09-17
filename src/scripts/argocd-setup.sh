@@ -3,7 +3,7 @@
 export SSH_PK_PATH=$1
 
 ## Register project repo in ArgoCD
-argocd repo add git@github.com:Dynatrace-CoPilot/ai-orchestration-playground.git --ssh-private-key-path $SSH_PK_PATH --name ai-orchestration-playground
+argocd repo add git@github.com:avillela/ai-sre-workflow-demo.git --ssh-private-key-path $SSH_PK_PATH --name ai-orchestration-playground
 
 ## Create ArgoCD project
 kubectl apply -n argocd -f src/argocd/projects/otel-demo-project.yaml
