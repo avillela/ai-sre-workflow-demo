@@ -57,7 +57,7 @@ prompt: |
     
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results.
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output guidelines" in the instructions.
 
 parameters:
   - key: forward_port
