@@ -1,0 +1,78 @@
+version: 1.0.0
+title: ArgoCD CLI installation
+description: Install the ArgoCD CLI
+instructions: |
+  Ensure {{ cli_name }} is installed and available in {{ target_directory}}. 
+  
+  * Verify if the tool already exists using the file path provided. 
+  * If yes, then skip the rest. 
+  * If not, download and install the appropriate version for the operating system, ensuring it is placed in the correct directory for user accessibility.
+
+prompt: |
+
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
+
+  ## Objectives
+
+  Your objective is to install the {{ cli_name }} CLI:
+
+  * Check to see if {{ cli_name }} already exists in {{ target_directory }}. If it does skip the subsequent steps in this section.
+  * Download the {{ cli_name }} CLI
+  * Install the {{ cli_name }} CLI
+  * Installaiton directory: {{ target_directory}}
+  * Test CLI installation by running `{{ cli_name }} version`.
+
+  ## Source
+
+  Information on how to install the {{ cli_name }} CLI can be found here: {{ cli_installation_docs }}
+
+  ## Output
+
+  Upon completion, print the following as per the "Output guidelines" in the instructions:
+  * Status of CLI installation (success/failed)
+  * CLI installation location
+  * Architecture of target machine
+  * Results of running `{{ cli_name }} version`
+
+parameters:
+  - key: target_directory
+    input_type: string
+    requirement: required
+    default: "~/.local/bin"
+    description: "Target directory"
+  - key: cli_name
+    input_type: string
+    requirement: required
+    default: "argocd"
+    description: "CLI name"
+  - key: cli_installation_docs
+    input_type: string
+    requirement: required
+    default: "https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli"
+    description: "Location of CLI installation docs"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+activities:
+- Check if a CLI tool is installed in the target directory
+- Install a missing CLI tool
+- Verify the installation directory
+- Update an existing CLI tool
+- Document installation steps
+author:
+  contact: avillela

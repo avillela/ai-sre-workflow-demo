@@ -32,7 +32,7 @@ prompt: |
 
   To do this, execute the following steps:
   
-  1. Check to see if there is a port-forward currently running on port. If there is an existing port-forward, abort.
+  1. Check to see if there is a port-forward currently running on port {{ forward_port }}. If there is an existing port-forward, abort.
   2. Run this command:
   
     ```bash
@@ -41,7 +41,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print of the following:
+  Upon completion, print of the following as per the "Output guidelines" in the instructions:
   * Status of port-forward (success/failed)
   * Name of port being forwarded
   * Command used for port-forward (if the port-forward was successful)

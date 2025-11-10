@@ -113,6 +113,9 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-cli.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
