@@ -1,11 +1,36 @@
 version: 1.0.0
 title: Kubernetes & ArgoCD install
 description: Create Kubernetes KinD cluster and install ArgoCD
-instructions: This guide outlines how to set up and configure a computing environment using command-line tools. Tasks include the creation of a cluster using tools like 'kind' and the installation of software such as ArgoCD. The steps require executing shell commands, checking tool-specific statuses (like pod readiness), and ensuring all outputs follow the requested format—particularly ensuring responses are in valid JSON when needed. These instructions can be adapted for similar tasks by following a systematic process of deploying resources, verifying status, and formatting outputs correctly.
+instructions: |
+  This guide outlines how to set up and configure a computing environment using command-line tools. 
+  
+  Tasks include the creation of a cluster using tools like 'kind' and the installation of software such as ArgoCD. The steps require executing shell commands, checking tool-specific statuses (like pod readiness), and ensuring all outputs follow the requested format—particularly ensuring responses are in valid JSON when needed. These instructions can be adapted for similar tasks by following a systematic process of deploying resources, verifying status, and formatting outputs correctly.
 prompt: |
-  Run this to create a kind cluster named {{ cluster_name }} and install ArgoCD. Wait until pods start showing up in the namespace. Continue wating until all pods in the argocd namespace must be in "running" status before moving on to next step. If there are no pods initially in the namespace, keep checking until they show.
 
-  Summarize results.
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm chargs and kubectl
+
+  ## Objectives
+
+  1. Create a KinD cluster named {{ cluster_name }}
+  2. Install ArgoCD
+  3. Print a report summarizing the installation results
+    * Version of Kubernetes installed
+    * Number of nodes running
+    * Status of Kubernetes services, deployments, and statefulsets in `argocd` namespace
+
+  ### ArgoCD installation guidance
+
+  * Wait until pods start showing up in the `argocd` namespace
+  * If there are no pods initially in the namespace, keep checking until they show.
+  * Continue wating until all 7 pods in the `argocd` namespace are in "running" status 
+  * Once all pods in the `argocd` namespace are in "running" status, then the ArgoCD installation task is considered to be complete
+
 parameters:
   - key: cluster_name
     input_type: string
@@ -21,15 +46,15 @@ extensions:
   timeout: 300
   bundled: true
   available_tools: []
-# settings:
-#   goose_provider: github_copilot
-#   goose_model: o3-mini
-#   temperature: 0.0
-activities:
-- Create cluster
-- Install ArgoCD
-- Verify pods
-- Check namespace
-- Execute shell commands
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
+# activities:
+# - Create cluster
+# - Install ArgoCD
+# - Verify pods
+# - Check namespace
+# - Execute shell commands
 author:
   contact: vscode
