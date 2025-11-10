@@ -17,12 +17,12 @@ sub_recipes:
     values:
       forward_port: "9080"
   - name: "cli_install"
-    path: "./sub_recipes/argo-cli.yaml"
+    path: "./sub_recipes/argocd-cli.yaml"
     values:
       target_directory: "~/.local/bin"
       cli_name: "argocd"
   - name: "password_update"
-    path: "./sub_recipes/argo-password-update.yaml"
+    path: "./sub_recipes/argocd-password-update.yaml"
 
 extensions:
 - type: builtin
