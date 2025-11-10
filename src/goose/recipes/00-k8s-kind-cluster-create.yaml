@@ -20,6 +20,8 @@ prompt: |
   * Configure Kubernetes clusters. This includes:
     * Installing operators
     * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
 
   ## Objectives
 
@@ -49,11 +51,5 @@ settings:
   goose_provider: github_copilot
   goose_model: claude-sonnet-4.5
   temperature: 0.5
-# activities:
-# - Create cluster
-# - Install ArgoCD
-# - Verify pods
-# - Check namespace
-# - Execute shell commands
 author:
-  contact: vscode
+  contact: avillela

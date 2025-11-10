@@ -1,0 +1,74 @@
+version: 1.0.0
+title: Bootstrap ArgoCD.
+description: Bootstrap ArgoCD for use.
+instructions: |
+  The task includes steps to bootstrap argocd, preparing the environment for use. It includes setting up port-forwarding, resetting the argocd password from the initial password
+
+  ## Output guidelines
+
+  * Summarize results in tabular format
+  * The summary table should have 2 columns:
+    * First column: Component
+    * Second column: Details
+
+sub_recipes:
+  - name: "port_forward"
+    path: "./sub_recipes/port-forward.yaml"
+    values:
+      forward_port: "9080"
+  - name: "cli_install"
+    path: "./sub_recipes/argo-cli.yaml"
+    values:
+      target_directory: "~/.local/bin"
+      cli_name: "argocd"
+  - name: "password_update"
+    path: "./sub_recipes/argo-password-update.yaml"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+prompt: |
+
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
+
+
+  ## Objectives
+
+  * Prepare the argocd environment by running the sub-recipes sequentially. 
+  * Run the sub-recipes in this order: 
+    1. port_forward
+    2. cli_install
+    3. password_update
+    
+    
+  ## Output
+
+  Summarize results after each sub-recipe executes, and then summarize overall results.
+
+parameters:
+  - key: forward_port
+    input_type: string
+    requirement: required
+    default: "9080"
+    description: "ArgoCD port forward"
+
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela

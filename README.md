@@ -94,7 +94,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/02-argo-bootstrap.yaml
+  goose run --recipe src/goose/recipes/02-argocd-bootstrap.yaml
 
 # Generate ArgoCD API token (to use ArgoCD MCP server)
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
