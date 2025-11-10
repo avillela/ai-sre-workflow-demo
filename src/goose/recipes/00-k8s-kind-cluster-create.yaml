@@ -1,0 +1,59 @@
+version: 1.0.0
+title: Create KinD Cluster
+description: Create Kubernetes KinD cluster
+instructions: |
+  This guide outlines how to set up and configure a local Kubernetes using KinD (Kubernetes in Docker).
+  
+  ## Summary report guidelines
+
+  * Summarize results in tabular format
+  * The summary table should have 2 columns:
+    * First column: Component
+    * Second column: Details
+
+prompt: |
+
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+
+  ## Objectives
+
+  1. Create a KinD cluster named {{ cluster_name }}
+  3. Print a report summarizing the installation results in tabular form. The table should include:
+    * Cluster name
+    * kubectl context name
+    * Version of Kubernetes installed
+    * Number of nodes running
+
+parameters:
+  - key: cluster_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "Name of KinD cluster"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
+# activities:
+# - Create cluster
+# - Install ArgoCD
+# - Verify pods
+# - Check namespace
+# - Execute shell commands
+author:
+  contact: vscode

@@ -1,10 +1,16 @@
 version: 1.0.0
-title: Kubernetes & ArgoCD install
-description: Create Kubernetes KinD cluster and install ArgoCD
+title: Install ArgoCD
+description: Install ArgoCD in the designated Kubernets cluster
 instructions: |
-  This guide outlines how to set up and configure a computing environment using command-line tools. 
+  This guide outlines how to install ArgoCD in a Kubernetes cluster.
   
-  Tasks include the creation of a cluster using tools like 'kind' and the installation of software such as ArgoCD. The steps require executing shell commands, checking tool-specific statuses (like pod readiness), and ensuring all outputs follow the requested format—particularly ensuring responses are in valid JSON when needed. These instructions can be adapted for similar tasks by following a systematic process of deploying resources, verifying status, and formatting outputs correctly.
+  ## Summary report guidelines
+
+  * Summarize results in tabular format
+  * The summary table should have 2 columns:
+    * First column: Component
+    * Second column: Details
+
 prompt: |
 
   ## Role
@@ -13,16 +19,15 @@ prompt: |
   * Create Kubernetes clusters
   * Configure Kubernetes clusters. This includes:
     * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm chargs and kubectl
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
 
   ## Objectives
 
-  1. Create a KinD cluster named {{ cluster_name }}
-  2. Install ArgoCD
-  3. Print a report summarizing the installation results
-    * Version of Kubernetes installed
-    * Number of nodes running
-    * Status of Kubernetes services, deployments, and statefulsets in `argocd` namespace
+  1. Install ArgoCD in the Kubernetes cluster named {{ cluster_name }}
+  2. Print a report summarizing the names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
+    * services
+    * deployments
+    * statefulsets
 
   ### ArgoCD installation guidance
 

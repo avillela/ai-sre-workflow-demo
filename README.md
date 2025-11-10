@@ -87,7 +87,10 @@ The commands below run the Goose recipes for bootstrapping Kubernetes (KinD) and
 
 # Create k8s cluster and install ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/01-k8s-setup.yaml
+  goose run --recipe src/goose/recipes/00-k8s-kind-cluster-create.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/01-argocd-install.yaml
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
