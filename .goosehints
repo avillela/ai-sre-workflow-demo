@@ -23,9 +23,9 @@ This file contains general hints for this project.
 
 * ArgoCD version: v3.2.0
 * Always use `--insecure` flag with the `argocd` CLI
-* ArgoCD console default port: `9080` 
+* ArgoCD port: `9080` 
 * After installing the `argocd` CLI, reload the bash profile manually
-* ArgoCD URL: the value of the environment variable `ARGOCD_BASE_URL`
+* ArgoCD server: the value of the environment variable `ARGOCD_BASE_URL`
 
 ## OpenTelemetry Operator
 

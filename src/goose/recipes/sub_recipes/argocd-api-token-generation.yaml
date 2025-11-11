@@ -21,26 +21,18 @@ prompt: |
 
   Your objective is to generate an ArgoCD API token for the `admin` account.
 
-  Assume that a port-forward is already set.
+  Assume that a port-forward on port 9080 is already set.
 
   Steps:
-  1. Log into argocd
-    * ArgoCD URL: the value of the environment variable `ARGOCD_BASE_URL`
-    * ArgoCD password: the value of the environment variable `ARGOCD_PASSWORD`
+  1. Log into ArgoCD using the `argocd` CLI
+    * ArgoCD server: the value of the environment variable ARGOCD_BASE_URL
+    * `password`: the value of the environment variable ARGOCD_PASSWORD
   2. Generate the API token
-    * Account name: `admin`
-  3. Add the API token to the end of {{ env_file }} using the key `ARGOCD_API_TOKEN`
-    * If there's already an `ARGOCD_API_TOKEN` key/value pair, replace the old one with the new one
-  4. Test the newly-created API token by runnining the following:
-
-    ```bash
-    curl -k -X GET https://<argocd_base_url>/api/v1/applications -H "Authorization: Bearer <argocd_api_token>"
-    ```
-
-    Where:
-    * `<argocd_api_token>` is the value of the ARGOCD_API_TOKEN environment variable
-    * `<argocd_base_url>` is the value of the ARGOCD_BASE_URL environment variable
-
+    * account: `admin`
+  3. Delete the line starting with ARGOCD_API_TOKEN in {{ env_file }} if there already is one
+  4. Add a key/value pair to the end of {{ env_file }}:
+    * key: ARGOCD_API_TOKEN
+    * value: the API token from step 2 to the end of {{ env_file }}, enclosed in double quotes
 
   ## Source
 
@@ -52,6 +44,7 @@ prompt: |
 
   Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
   * Token generation status (success/failed)
+  * Results of running the command in step 4
 
 parameters:
   - key: env_file
