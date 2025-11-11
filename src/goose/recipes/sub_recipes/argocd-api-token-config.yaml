@@ -5,7 +5,7 @@ instructions: |
   
   Your job is to update ArgoCD to enable the default admin account to generate an ArgoCD API token.
 
-  ## Output guidelines
+  ## Output Guidelines
 
   * Summarize results in tabular format
   * The summary table should have 2 columns:
@@ -41,7 +41,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print the following as per the "Output guidelines" in the instructions:
+  Upon completion, print the following as per the "Output Guidelines" in the instructions:
   * Status of patch (success/failed)
   * Status of `argocd-server` (success/failed)
 

@@ -1,21 +1,25 @@
-If helm isn't available to install a Kubernetes operator, use kubectl instead.
+This file contains general hints for this project.
 
-Always use version v3.1.4 of ArgoCD.
+## Output Guidelines
 
-Always create an argocd namespace before installing argocd in kubernetes.
+* Summarize results in tabular format
+* The summary table should have 2 columns:
+* First column: Component
+* Second column: Details
 
-Always use the --insecure option when using the argocd CLI.
+## Kubernetes
 
-Upon installing ArgoCD check to make sure that pod status is "running" for all pods in the argocd namespace before proceeding to the next step.
+* Target kubernetes cluster: `otel`
+* If `helm` isn't available to install a Kubernetes operator, use `kubectl` instead.
 
-The ArgoCD admin password secret is located in the argocd namespace. When retrieving the ArgoCD password, it should be base64 decoded.
+## ArgoCD
 
-After installing the ArgoCD CLI, reload the bash profile manually.
+* ArgoCD version: v3.1.4
+* Always use `--insecure` flag with the `argocd` CLI
+* After installing the `argocd` CLI, reload the bash profile manually
+* ArgoCD URL: the value of the environment variable `ARGOCD_BASE_URL`
 
-Set up port-forwarding when installing ArgoCD.
+## OpenTelemetry Operator
 
-Install cert-manager and the OpenTelemetry operator using kubectl.
+* Install `cert-manager` and the OpenTelemetry operator using `kubectl`
 
-When installing cert-manager, keep checking pod readiness status and don't move on to the next step.
-
-When installing the OpenTelemetry Operator, install cert-manager first. Do not install the OpenTelemetry operator until all cert-manager pods have a status of "running". Keep checking and don't move on to the next step until this is met.

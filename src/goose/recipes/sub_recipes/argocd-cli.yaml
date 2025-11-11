@@ -37,7 +37,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print the following as per the "Output guidelines" in the instructions:
+  Upon completion, print the following as per the "Output Guidelines" in the instructions:
   * Status of CLI installation (success/failed)
   * CLI installation location
   * Architecture of target machine

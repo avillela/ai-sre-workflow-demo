@@ -1,11 +1,45 @@
 version: 1.0.0
 title: Generate ArgoCD API token
 description: Generate an ArgoCD API token for the admin account
-instructions: The instructions provided detail a process of generating an argocd API token for a user account. It involves logging into argocd via the cli first, then then generating the token. This token is stored in a designated `.env` file using a specified key, with proper validation of server states and environment readiness throughout the process.
-prompt: |
-  Run this to generate the argocd api token. Log into argocd. The argocd URL is the value of the environment variable ARGOCD_BASE_URL. The password will be the value of the ARGOCD_PASSWORD environment variable. The api token should be added to the end of {{ env_file }} using the key ARGOCD_API_TOKEN.
+instructions: |
 
-  Summarize results.
+  Your job is to generate an ArgoCD API token for the admin account.
+
+prompt: |
+
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
+
+  ## Objectives
+
+  Your objective is to generate an ArgoCD API token for the `admin` account.
+
+  Steps:
+  * Log into argocd
+    * ArgoCD URL: the value of the environment variable `ARGOCD_BASE_URL`
+    * ArgoCD password: the value of the environment variable `ARGOCD_PASSWORD`
+  * Generate the API token
+    * Account name: `admin`
+  * Add the API token to the end of {{ env_file }} using the key `ARGOCD_API_TOKEN`
+    * If there's already an `ARGOCD_API_TOKEN` key/value pair, replace the old one with the new one
+  
+  ## Source
+
+  * How to login to ArgoCD via the `argocd` CLI: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
+  * How to generate the ArgoCD API token via the `argocd` CLI: https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_account_generate-token/
+
+
+  ## Output
+
+  Upon print the following as per the "Output Guidelines" in `.goosehints`:
+  * Token generation status (success/failed)
 
 parameters:
   - key: env_file
@@ -23,9 +57,9 @@ extensions:
   bundled: true
   available_tools: []
 
-activities:
-- Login via CLI
-- Generate API token
-- Store API token in a .env file
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela

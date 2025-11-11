@@ -7,7 +7,7 @@ instructions: |
   * Use `kubectl port-forward`, running it with `nohup` to persist the process after logouts. 
   * Ensure outputs are redirected to a log file for monitoring, and run the command in the background using '&'. Logs can be reviewed as needed using standard shell utilities (e.g., `cat`). This process is useful for debugging, accessing services locally, or establishing a temporary connection to a cluster service. Custom ports and namespaces can be configured depending on the use case.
 
-  ## Output guidelines
+  ## Output Guidelines
 
   * Summarize results in tabular format
   * The summary table should have 2 columns:
@@ -40,7 +40,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print of the following as per the "Output guidelines" in the instructions:
+  Upon completion, print of the following as per the "Output Guidelines" in the instructions:
   * Status of port-forward (success/failed)
   * Name of port being forwarded
   * Command used for port-forward (if the port-forward was successful)

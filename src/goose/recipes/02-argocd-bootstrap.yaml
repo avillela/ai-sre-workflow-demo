@@ -4,7 +4,7 @@ description: Bootstrap ArgoCD for use.
 instructions: |
   The task includes steps to bootstrap argocd, preparing the environment for use. It includes setting up port-forwarding, resetting the argocd password from the initial password
 
-  ## Output guidelines
+  ## Output Guidelines
 
   * Summarize results in tabular format
   * The summary table should have 2 columns:
@@ -57,7 +57,7 @@ prompt: |
     
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output guidelines" in the instructions.
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in the instructions.
 
 settings:
   goose_provider: github_copilot
