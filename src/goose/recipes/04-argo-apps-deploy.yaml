@@ -1,7 +1,9 @@
 version: 1.0.0
 title: 
 description: Deploy ArgoCD apps
-instructions: "This task includes steps to run scripts to enable the deployment of the OpenTelemetry Demo App using ArgoCD. Execute the steps below, and confirm when each command has been executed."
+instructions: |
+
+  Your job is to deploy the OpenTelemetry Demo on Kubernetes, managed by ArgoCD.
 
 sub_recipes:
   - name: "argo_repo_proj_setup"
@@ -12,12 +14,33 @@ sub_recipes:
     path: "./sub_recipes/deploy-otel-demo.yaml"
 
 prompt: |
- Deploy the OpenTelemetry Demo on Kubernetes. Run the sub-recipes in this order: argo_repo_proj_setup, deply_otel_demo. Summarize results after each sub-recipe executes, and then summarize overall results.
 
-activitiew:
-- Login via CLI
-- Run sub-recipes
-- Use environment variables
+  ## Role
 
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
+
+  ## Objectives
+ 
+  Use ArgoCD to manage the deployment of the OpenTelemetry Demo on Kubernetes. 
+  
+  Run the sub-recipes in this order:
+  1. argo_repo_proj_setup
+  2. deply_otel_demo
+
+  ## Output
+
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in `.goosehints`.
+
+
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela
