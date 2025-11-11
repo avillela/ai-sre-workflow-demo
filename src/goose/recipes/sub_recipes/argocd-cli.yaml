@@ -24,6 +24,7 @@ prompt: |
 
   Your objective is to install the {{ cli_name }} CLI:
 
+  Steps:
   * Check to see if {{ cli_name }} already exists in {{ target_directory }}. If it does skip the subsequent steps in this section.
   * Download the {{ cli_name }} CLI
   * Install the {{ cli_name }} CLI
@@ -68,11 +69,9 @@ extensions:
   bundled: true
   available_tools: []
 
-activities:
-- Check if a CLI tool is installed in the target directory
-- Install a missing CLI tool
-- Verify the installation directory
-- Update an existing CLI tool
-- Document installation steps
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela

@@ -30,8 +30,7 @@ prompt: |
   
   Create a kubernetes port forward that runs in the background.
 
-  To do this, execute the following steps:
-  
+  Steps:
   1. Check to see if there is a port-forward currently running on port {{ forward_port }}. If there is an existing port-forward, abort.
   2. Run this command:
   
@@ -62,5 +61,9 @@ extensions:
   bundled: true
   available_tools: []
 
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela

@@ -1,0 +1,73 @@
+version: 1.0.0
+title: Generate ArgoCD API token
+description: Generate an ArgoCD API token for the admin account
+instructions: |
+  Your job is to generate an ArgoCD API token.
+
+  ## Output guidelines
+
+  * Summarize results in tabular format
+  * The summary table should have 2 columns:
+    * First column: Component
+    * Second column: Details
+
+parameters:
+  - key: env_file
+    input_type: string
+    requirement: required
+    default: "src/goose/config/.env"
+    description: "Env file path (including .env file)"
+
+sub_recipes:
+  - name: "token_config"
+    path: "./sub_recipes/argocd-api-token-config.yaml"
+  - name: "port_forward"
+    path: "./sub_recipes/port-forward.yaml"
+  - name: "token_gen"
+    path: "./sub_recipes/argocd-api-token-generation.yaml"
+    values:
+      env_file: "{{ env_file }}"
+      # include_dependencies: "true"
+
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+prompt: |
+
+  ## Role
+
+  You are a site reliability engineer. Your role is to:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters. This includes:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running scripts on the command line
+
+  ## Objectives
+
+  Your objective is to generate an argocd API token. This token is used by the ArogCD MCP server for authentication.
+
+  * Generate an argocd api token by running the sub-recipes sequentially.
+  * Run the sub-recipes in this order: 
+    1. token_config
+    2. port_forward
+    3. token_gen
+    
+  ## Output
+
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output guidelines" in the instructions.
+
+settings:
+  goose_provider: github_copilot
+  goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela
