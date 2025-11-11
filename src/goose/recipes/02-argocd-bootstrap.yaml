@@ -2,14 +2,8 @@ version: 1.0.0
 title: Bootstrap ArgoCD.
 description: Bootstrap ArgoCD for use.
 instructions: |
-  The task includes steps to bootstrap argocd, preparing the environment for use. It includes setting up port-forwarding, resetting the argocd password from the initial password
-
-  ## Output Guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
+  
+  Your job is to bootstrap argocd, preparing the environment for use. It includes setting up port-forwarding, resetting the argocd password from the initial password
 
 sub_recipes:
   - name: "port_forward"
@@ -17,7 +11,7 @@ sub_recipes:
     values:
       forward_port: "9080"
   - name: "cli_install"
-    path: "./sub_recipes/argocd-cli.yaml"
+    path: "./sub_recipes/argocd-cli-install.yaml"
     values:
       target_directory: "~/.local/bin"
       cli_name: "argocd"
@@ -48,8 +42,9 @@ prompt: |
 
   ## Objectives
 
-  * Prepare the argocd environment by running the sub-recipes sequentially. 
-  * Run the sub-recipes in this order: 
+  Prepare the argocd environment by running the sub-recipes sequentially.
+
+  Run the sub-recipes in this order: 
     1. port_forward
     2. cli_install
     3. password_update
@@ -57,11 +52,11 @@ prompt: |
     
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in the instructions.
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in `.goosehints`.
 
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

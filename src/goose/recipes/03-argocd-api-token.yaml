@@ -2,14 +2,8 @@ version: 1.0.0
 title: Generate ArgoCD API token
 description: Generate an ArgoCD API token for the admin account
 instructions: |
+  
   Your job is to generate an ArgoCD API token.
-
-  ## Output Guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
 
 parameters:
   - key: env_file
@@ -55,19 +49,20 @@ prompt: |
 
   Your objective is to generate an argocd API token. This token is used by the ArogCD MCP server for authentication.
 
-  * Generate an argocd api token by running the sub-recipes sequentially.
-  * Run the sub-recipes in this order: 
+  Generate an ArgoCD api token by running the sub-recipes sequentially.
+  
+  Run the sub-recipes in this order: 
     1. token_config
     2. port_forward
     3. token_gen
     
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in the instructions.
+  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in `.goosehints`.
 
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

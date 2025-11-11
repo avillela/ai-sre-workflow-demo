@@ -2,15 +2,9 @@ version: 1.0.0
 title: Install ArgoCD
 description: Install ArgoCD in the designated Kubernets cluster
 instructions: |
-  This guide outlines how to install ArgoCD in a Kubernetes cluster.
   
-  ## Summary report guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
-
+  Your job is to install ArgoCD in a Kubernetes cluster.
+  
 prompt: |
 
   ## Role
@@ -25,18 +19,26 @@ prompt: |
 
   ## Objectives
 
-  1. Install ArgoCD in the Kubernetes cluster named {{ cluster_name }}
-  2. Print a report summarizing the names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
-    * services
-    * deployments
-    * statefulsets
+  Install ArgoCD in the Kubernetes cluster named {{ cluster_name }}.
 
+  Guidance:
+  * Create `argocd` namespace before installing ArgoCD
+  * ArgoCD Version: use ArgoCD version specified in `.goosehints`
+  
   ### ArgoCD installation guidance
 
   * Wait until pods start showing up in the `argocd` namespace
   * If there are no pods initially in the namespace, keep checking until they show.
   * Continue wating until all 7 pods in the `argocd` namespace are in "running" status 
-  * Once all pods in the `argocd` namespace are in "running" status, then the ArgoCD installation task is considered to be complete
+  * Once all pods in the `argocd` namespace are in "running" status and ready "1/1", then the ArgoCD installation task is considered to be complete
+
+  # Output
+
+  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
+  * Summarize the names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
+    * services
+    * deployments
+    * statefulsets
 
 parameters:
   - key: cluster_name
@@ -55,7 +57,7 @@ extensions:
   available_tools: []
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

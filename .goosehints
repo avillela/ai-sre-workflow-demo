@@ -10,12 +10,20 @@ This file contains general hints for this project.
 ## Kubernetes
 
 * Target kubernetes cluster: `otel`
-* If `helm` isn't available to install a Kubernetes operator, use `kubectl` instead.
+* Port-forwarding command:
+
+   ```bash
+   nohup kubectl port-forward svc/argocd-server -n argocd <forward_port>:443 > portforward.log 2>&1 &
+   ```
+
+   Where `<forward_port>` is the port number forwarded.
+
 
 ## ArgoCD
 
-* ArgoCD version: v3.1.4
+* ArgoCD version: v3.2.0
 * Always use `--insecure` flag with the `argocd` CLI
+* ArgoCD console default port: `9080` 
 * After installing the `argocd` CLI, reload the bash profile manually
 * ArgoCD URL: the value of the environment variable `ARGOCD_BASE_URL`
 

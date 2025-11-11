@@ -5,14 +5,6 @@ instructions: |
   
   Your job is to update ArgoCD to enable the default admin account to generate an ArgoCD API token.
 
-  ## Output Guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
-
-
 prompt: |
 
   ## Role
@@ -32,18 +24,18 @@ prompt: |
   Steps:
   * Patch the `argocd-cm` configmap in the `argocd` namespace as type `merge`, and add `{"data": {"accounts.admin": "apiKey"}}`.
   * Restart `argocd-server` in the `argocd` namespace
-  * Check to make sure that `argocd-server` is in "running" status. This task is complete once this is true.
-  * Verify the patch by running `kubectl get configmap argocd-cm -n argocd -o jsonpath='{.data.accounts\.admin}'`. The output should be `apiKey`.
+  * Check to make sure that `argocd-server` is in "running" status and ready "1/1". This task is complete once this is true.
+  * Verify the patch by running `kubectl get configmap argocd-cm -n argocd -o jsonpath='{.data.accounts\.admin}'`. Expected output: `apiKey`.
 
   ## Source
 
-  Information on how to patch `argocd-cm` can be found here: https://docs.opsmx.com/opsmx-intelligent-software-delivery-isd-platform-argo/additional-resources/create-api-token-in-argo-cd#generate-token-from-argo-cd-ui
+  How to patch `argocd-cm`: https://docs.opsmx.com/opsmx-intelligent-software-delivery-isd-platform-argo/additional-resources/create-api-token-in-argo-cd#generate-token-from-argo-cd-ui
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in the instructions:
+  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
   * Status of patch (success/failed)
-  * Status of `argocd-server` (success/failed)
+  * Status of `argocd-server` (running/not running)
 
 
 extensions:
@@ -57,7 +49,7 @@ extensions:
 
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

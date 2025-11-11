@@ -3,16 +3,7 @@ title: ArgoCD port forward
 description: Create an ArgoCD port forward
 instructions: |
   
-  * Establish a reliable port-forward connection between a local machine and a Kubernetes service
-  * Use `kubectl port-forward`, running it with `nohup` to persist the process after logouts. 
-  * Ensure outputs are redirected to a log file for monitoring, and run the command in the background using '&'. Logs can be reviewed as needed using standard shell utilities (e.g., `cat`). This process is useful for debugging, accessing services locally, or establishing a temporary connection to a cluster service. Custom ports and namespaces can be configured depending on the use case.
-
-  ## Output Guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
+  Your job is to create a port forward that runs in the background.
 
 prompt: |
   
@@ -28,7 +19,7 @@ prompt: |
 
   ## Objectives
   
-  Create a kubernetes port forward that runs in the background.
+  Create a kubernetes port forward that runs in the background, to enable access to the ArgoCD admin console.
 
   Steps:
   1. Check to see if there is a port-forward currently running on port {{ forward_port }}. If there is an existing port-forward, abort.
@@ -40,7 +31,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print of the following as per the "Output Guidelines" in the instructions:
+  Upon completion, print of the following as per the "Output Guidelines" in `.goosehints`:
   * Status of port-forward (success/failed)
   * Name of port being forwarded
   * Command used for port-forward (if the port-forward was successful)
@@ -63,7 +54,7 @@ extensions:
 
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

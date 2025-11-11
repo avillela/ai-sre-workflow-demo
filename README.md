@@ -90,7 +90,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/00-k8s-kind-cluster-create.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/01-argocd-install.yaml
+  goose run --recipe src/goose/recipes/01-argocd-install.yaml --params cluster_name=kind-otel
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
@@ -113,7 +113,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argocd-cli.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-cli-install.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-password-update.yaml

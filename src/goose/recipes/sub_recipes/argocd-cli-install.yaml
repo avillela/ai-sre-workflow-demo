@@ -2,11 +2,8 @@ version: 1.0.0
 title: ArgoCD CLI installation
 description: Install the ArgoCD CLI
 instructions: |
-  Ensure {{ cli_name }} is installed and available in {{ target_directory}}. 
   
-  * Verify if the tool already exists using the file path provided. 
-  * If yes, then skip the rest. 
-  * If not, download and install the appropriate version for the operating system, ensuring it is placed in the correct directory for user accessibility.
+  Your job is to install the ArgoCD CLI.
 
 prompt: |
 
@@ -22,22 +19,22 @@ prompt: |
 
   ## Objectives
 
-  Your objective is to install the {{ cli_name }} CLI:
+  Your objective is to install the {{ cli_name }} CLI.
 
   Steps:
-  * Check to see if {{ cli_name }} already exists in {{ target_directory }}. If it does skip the subsequent steps in this section.
-  * Download the {{ cli_name }} CLI
-  * Install the {{ cli_name }} CLI
-  * Installaiton directory: {{ target_directory}}
-  * Test CLI installation by running `{{ cli_name }} version`.
+  1. Check to see if {{ cli_name }} already exists in {{ target_directory }}. If it does skip the subsequent steps in this section.
+  2. Download the {{ cli_name }} CLI. Use the ArgoCD version specified in `.goosehints`
+  3. Install the {{ cli_name }} CLI
+  4. Installaiton directory: {{ target_directory}}
+  5. Test CLI installation by running `{{ cli_name }} version`.
 
   ## Source
 
-  Information on how to install the {{ cli_name }} CLI can be found here: {{ cli_installation_docs }}
+  {{ cli_name }} installation instructions: {{ cli_installation_docs }}
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in the instructions:
+  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
   * Status of CLI installation (success/failed)
   * CLI installation location
   * Architecture of target machine
@@ -57,7 +54,7 @@ parameters:
   - key: cli_installation_docs
     input_type: string
     requirement: required
-    default: "https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli"
+    default: "https://argo-cd.readthedocs.io/en/stable/cli_installation/"
     description: "Location of CLI installation docs"
 
 extensions:
@@ -71,7 +68,7 @@ extensions:
 
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela

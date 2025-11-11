@@ -2,15 +2,9 @@ version: 1.0.0
 title: Create KinD Cluster
 description: Create Kubernetes KinD cluster
 instructions: |
-  This guide outlines how to set up and configure a local Kubernetes using KinD (Kubernetes in Docker).
+
+  Your job is to create a local Kubernetes using KinD (Kubernetes in Docker).
   
-  ## Summary report guidelines
-
-  * Summarize results in tabular format
-  * The summary table should have 2 columns:
-    * First column: Component
-    * Second column: Details
-
 prompt: |
 
   ## Role
@@ -25,8 +19,11 @@ prompt: |
 
   ## Objectives
 
-  1. Create a KinD cluster named {{ cluster_name }}
-  3. Print a report summarizing the installation results in tabular form. The table should include:
+  Create a KinD cluster named {{ cluster_name }}
+
+  ## Output
+
+  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
     * Cluster name
     * kubectl context name
     * Version of Kubernetes installed
@@ -49,7 +46,7 @@ extensions:
   available_tools: []
 settings:
   goose_provider: github_copilot
-  goose_model: claude-sonnet-4.5
+  # goose_model: claude-sonnet-4.5
   temperature: 0.5
 author:
   contact: avillela
