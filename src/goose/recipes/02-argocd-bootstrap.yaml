@@ -59,13 +59,6 @@ prompt: |
 
   Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output guidelines" in the instructions.
 
-parameters:
-  - key: forward_port
-    input_type: string
-    requirement: required
-    default: "9080"
-    description: "ArgoCD port forward"
-
 settings:
   goose_provider: github_copilot
   goose_model: claude-sonnet-4.5
