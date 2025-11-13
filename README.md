@@ -85,10 +85,15 @@ The commands below run the Goose recipes for bootstrapping Kubernetes (KinD) and
 
 ```bash
 
-# Create k8s cluster and install ArgoCD
+# Create k8s KinD cluster
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/00-k8s-kind-cluster-create.yaml
 
+# Create k8s GKE cluster
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/00-k8s-gke-cluster-create.yaml
+
+# Install ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/01-argocd-install.yaml --params cluster_name=kind-otel
 

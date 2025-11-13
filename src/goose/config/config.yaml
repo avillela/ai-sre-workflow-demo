@@ -42,7 +42,8 @@ extensions:
     type: stdio
 # GOOSE_MODEL: gpt-4o
 # GOOSE_MODEL: claude-sonnet-4.5
-GOOSE_MODEL: gpt-4.1
+# GOOSE_MODEL: gpt-4.1
+GOOSE_MODEL: grok-code-fast-1
 # GOOSE_MODEL: o3-mini
 GOOSE_PROVIDER: github_copilot
 
