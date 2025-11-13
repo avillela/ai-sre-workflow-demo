@@ -1,9 +1,9 @@
 version: 1.0.0
-title: Create KinD Cluster
-description: Create Kubernetes KinD cluster
+title: Create GKE Cluster
+description: Create Kubernetes GKE cluster
 instructions: |
 
-  Your job is to create a local Kubernetes using KinD (Kubernetes in Docker).
+  Your job is to create a Kubernetes GKE cluster using the `gcloud` CLI.
   
 prompt: |
 
@@ -31,6 +31,9 @@ prompt: |
     * num nodes: the value of environment variable GKE_NUM_NODES
     * monitoring: NONE
     * logging: NONE
+  3. Update the `kubectl` context by running `gcloud container clusters get-credentials`
+    * cluster name: {{ cluster_name }}
+    * zone: the value of environment variable GCP_ZONE
 
   ## Source
 
@@ -50,7 +53,7 @@ parameters:
   - key: cluster_name
     input_type: string
     requirement: required
-    default: "otel"
+    default: "otel3"
     description: "Name of KinD cluster"
 
 extensions:
