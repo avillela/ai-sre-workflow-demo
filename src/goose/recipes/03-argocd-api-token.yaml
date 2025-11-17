@@ -12,19 +12,29 @@ parameters:
     input_type: string
     requirement: required
     default: "src/goose/config/.env"
-    description: "Env file path (including .env file)"
+    description: "Env file path (includes .env file)"
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 sub_recipes:
   - name: "token_config"
     path: "./sub_recipes/argocd-api-token-config.yaml"
+    values:
+      context_name: "{{ context_name }}"
   - name: "port_forward"
     path: "./sub_recipes/port-forward.yaml"
+    values:
+      forward_port: "9080"
+      context_name: "{{ context_name }}"      
   - name: "token_gen"
     path: "./sub_recipes/argocd-api-token-generation.yaml"
     values:
       env_file: "{{ env_file }}"
+      context_name: "{{ context_name }}"
       # include_dependencies: "true"
-
 
 extensions:
 - type: builtin
@@ -48,9 +58,9 @@ prompt: |
     
   ## Output
 
-  * Summarize results after each sub-recipe completes
   * Format output per "Output Guidelines" from `.goosehints`. Include only:
     - Recipe name
+    - Recipe-specific output fields
     - Recipe execution status
 
 settings:

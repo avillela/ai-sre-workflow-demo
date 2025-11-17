@@ -22,7 +22,9 @@ prompt: |
   * The port-forward MUST run as a background process
 
   Steps:
-  1. Check to see if there is a port-forward currently running on port {{ forward_port }}. If there is an existing port-forward, abort.
+  1. Is there port-forward currently running on port {{ forward_port }}?
+    * If yes: delete the existing port-forward on {{ forward_port }} and proceed to step 2
+    * If no: proceed step 2
   2. Create the port-forward using the port-forward command provided in the instructions
   
   ## Output

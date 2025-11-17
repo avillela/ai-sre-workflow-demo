@@ -3,25 +3,27 @@ title: Generate ArgoCD API token
 description: Generate an ArgoCD API token for the admin account
 instructions: |
 
-  Your job is to generate an ArgoCD API token for the admin account.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Testing the ArgoCD API token
+
+  Test command:
+  ```bash
+  argocd cluster list --server <ARGOCD_BASE_URL> --auth-token <ARGOCD_API_TOKEN>
+  ```
 
 prompt: |
 
-  ## Role
+  ## Must follow
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
+  * Do NOT create a port-forward, because it already exists!
+  * The ArgoCD admin account already has token-generation capabilities. Do NOT patch the `argocd-cm` configmap.
 
-  ## Objectives
+  ## Objective
 
-  Your objective is to generate an ArgoCD API token for the `admin` account.
-
-  Assume that a port-forward on port 9080 is already set.
+  Generate an ArgoCD API token for the `admin` account and save the new value to {{ env_file }}.
 
   Steps:
   1. Log into ArgoCD using the `argocd` CLI
@@ -29,22 +31,27 @@ prompt: |
     * `password`: the value of the environment variable ARGOCD_PASSWORD
   2. Generate the API token
     * account: `admin`
-  3. Delete the line starting with ARGOCD_API_TOKEN in {{ env_file }} if there already is one
-  4. Add a key/value pair to the end of {{ env_file }}:
-    * key: ARGOCD_API_TOKEN
-    * value: the API token from step 2 to the end of {{ env_file }}, enclosed in double quotes
+  3. Check if ARGOCD_API_TOKEN exists in {{ env_file }}
+    * If yes: delete the existing line starting with ARGOCD_API_TOKEN
+    * If no: append a new key/value pair to the end of {{ env_file }}:
+      - key: ARGOCD_API_TOKEN
+      - value: the API token from step 2, enclosed in double quotes
+  4. Run a test to make sure that the newly-created ArgoCD API token works.
+    * Use the test command provided in the instructions
 
   ## Source
 
-  * How to login to ArgoCD via the `argocd` CLI: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
-  * How to generate the ArgoCD API token via the `argocd` CLI: https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_account_generate-token/
+  ArgoCD CLI resources:
+  * ArgoCD login: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
+  * Generate ArgoCD API token: https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_account_generate-token/
 
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
-  * Token generation status (success/failed)
-  * Results of running the command in step 4
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Token generation status: success/failed
+  * String replacement status in {{ env_file }}: success/failed
+  * Command used to test the ArgoCD API token, and its results
 
 parameters:
   - key: env_file
@@ -65,6 +72,6 @@ extensions:
 settings:
   goose_provider: github_copilot
   # goose_model: claude-sonnet-4.5
-  temperature: 0.5
+  temperature: 0.3
 author:
   contact: avillela

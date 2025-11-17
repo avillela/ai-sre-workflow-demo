@@ -3,40 +3,55 @@ title: Generate ArgoCD API token
 description: Generate an ArgoCD API token for the admin account
 instructions: |
   
-  Your job is to update ArgoCD to enable the default admin account to generate an ArgoCD API token.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Verify the patch to the `argocd-cm` configmap
+
+  ```bash
+    kubectl --context {{ context_name }} get configmap argocd-cm -n argocd -o jsonpath='{.data.accounts\.admin}'
+  ```
+  
+  Expected output: `apiKey`.
 
 prompt: |
 
-  ## Role
+  ## Objective
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
-
-  Your objective is to enable argocd to generate api token.
+  Enable argocd to generate an API token for the admin account.
   
   Steps:
-  * Patch the `argocd-cm` configmap in the `argocd` namespace as type `merge`, and add `{"data": {"accounts.admin": "apiKey"}}`.
-  * Restart `argocd-server` in the `argocd` namespace
-  * Check to make sure that `argocd-server` is in "running" status and ready "1/1". This task is complete once this is true.
-  * Verify the patch by running `kubectl get configmap argocd-cm -n argocd -o jsonpath='{.data.accounts\.admin}'`. Expected output: `apiKey`.
-
+  1. Patch the `argocd-cm` configmap:
+    - context: {{ context_name }}
+    - namespace: `argocd`
+    - type: `merge`
+    - add the following to the configmap `{"data": {"accounts.admin": "apiKey"}}`
+  2. Restart `argocd-server`:
+    - context: {{ context_name }}
+    - namespace: `argocd`
+  3. Make sure that the new `argocd-server` pod has started. Check:
+    - status: "running"
+    - ready: "1/1"
+    Do NOT go to Step 4 until both criteria are fulfilled.
+  4. Verify the `argocd-cm` patch
+    
   ## Source
 
   How to patch `argocd-cm`: https://docs.opsmx.com/opsmx-intelligent-software-delivery-isd-platform-argo/additional-resources/create-api-token-in-argo-cd#generate-token-from-argo-cd-ui
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
   * Status of patch (success/failed)
   * Status of `argocd-server` (running/not running)
 
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 extensions:
 - type: builtin

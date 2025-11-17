@@ -103,7 +103,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Generate ArgoCD API token (to use ArgoCD MCP server)
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/03-argocd-api-token.yaml
+  goose run --recipe src/goose/recipes/03-argocd-api-token.yaml --params context_name=kind-otel
 
 # Deploy OTel Demo to k8s via ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
@@ -115,7 +115,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # FOR TESTING: Sub-recipes
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-cli-install.yaml
@@ -124,10 +124,10 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-password-update.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-config.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-config.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-generation.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-generation.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml
