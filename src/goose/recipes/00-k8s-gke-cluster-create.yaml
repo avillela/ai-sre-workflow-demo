@@ -3,23 +3,45 @@ title: Create GKE Cluster
 description: Create Kubernetes GKE cluster
 instructions: |
 
-  Your job is to create a Kubernetes GKE cluster using the `gcloud` CLI.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Google Cloud (GCP) & GKE Guidance
+
+  ### Set GCP project
+  
+  Sample command:
+
+  ```bash
+  gcloud config set project <GCP_PROJECT_NAME>
+  ```
+
+  ### Create GKE cluster
+
+  Sample command:
+
+  ```bash
+  gcloud container clusters create {{ cluster_name }} \
+  --zone <GCP_ZONE> \
+  --machine-type=<GKE_MACHINE_TYPE> \
+  --num-nodes=<GKE_NUM_NODES> \
+  --monitoring=NONE --logging=NONE
+  ```
+
+  ### Add GKE cluster to `kubectl` context:
+
+  Sample command:
+
+  ```bash
+  gcloud container clusters get-credentials {{ cluster_name }} --region <REGION> --project <PROJECT_ID>
+  ```
   
 prompt: |
 
-  ## Role
+  ## Objective
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
-
-  Your objective is to create a GKE cluster named {{ cluster_name }} using the `gcloud` CLI tool.
+  Create a GKE cluster named {{ cluster_name }} using the `gcloud` CLI tool.
 
   Steps:
   1. Set GCP project
@@ -31,7 +53,7 @@ prompt: |
     * num nodes: the value of environment variable GKE_NUM_NODES
     * monitoring: NONE
     * logging: NONE
-  3. Update the `kubectl` context by running `gcloud container clusters get-credentials`
+  3. Add GKE cluster to the local `kubectl` context:
     * cluster name: {{ cluster_name }}
     * zone: the value of environment variable GCP_ZONE
 
@@ -41,7 +63,7 @@ prompt: |
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
     * GCP project name
     * Cluster name
     * kubectl context name
@@ -53,7 +75,7 @@ parameters:
   - key: cluster_name
     input_type: string
     requirement: required
-    default: "otel3"
+    default: "otel"
     description: "Name of KinD cluster"
 
 extensions:

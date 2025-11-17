@@ -3,49 +3,40 @@ title: Install ArgoCD
 description: Install ArgoCD in the designated Kubernets cluster
 instructions: |
   
-  Your job is to install ArgoCD in a Kubernetes cluster.
-  
-prompt: |
-
   ## Role
+  
+  Use role from `.goosehints`.
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
+prompt: |
 
   ## Objectives
 
-  Install ArgoCD in the Kubernetes cluster named {{ cluster_name }}.
+  Install ArgoCD in Kubernetes.
 
   Guidance:
+  * Use kubernetes context {{ context_name }}
   * Create `argocd` namespace before installing ArgoCD
   * ArgoCD Version: use ArgoCD version specified in `.goosehints`
   
   ### ArgoCD installation guidance
 
-  * Wait until pods start showing up in the `argocd` namespace
-  * If there are no pods initially in the namespace, keep checking until they show.
-  * Continue wating until all 7 pods in the `argocd` namespace are in "running" status 
-  * Once all pods in the `argocd` namespace are in "running" status and ready "1/1", then the ArgoCD installation task is considered to be complete
+  * Wait until all 7 pods in the `argocd` namespace are in "running" status and ready "1/1",
+  * Once above criteria are met, then the ArgoCD installation is complete
 
   # Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
-  * Summarize the names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Summary of names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
     * services
     * deployments
     * statefulsets
 
 parameters:
-  - key: cluster_name
+  - key: context_name
     input_type: string
     requirement: required
     default: "otel"
-    description: "Name of KinD cluster"
+    description: "k8s cluster name"
 
 extensions:
 - type: builtin

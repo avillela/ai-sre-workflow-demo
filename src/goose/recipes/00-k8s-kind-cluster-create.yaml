@@ -3,27 +3,27 @@ title: Create KinD Cluster
 description: Create Kubernetes KinD cluster
 instructions: |
 
-  Your job is to create a local Kubernetes using KinD (Kubernetes in Docker).
+  ## Role
+  
+  Use role from `.goosehints`.
+  
+  ## Kubernetes in Docker (KinD) Guidance
+
+  Sample command:
+
+  ```bash
+  kind create cluster --name {{ cluster_name }}
+  ```
   
 prompt: |
 
-  ## Role
-
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
+  ## Objective
 
   Create a KinD cluster named {{ cluster_name }}
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
     * Cluster name
     * kubectl context name
     * Version of Kubernetes installed

@@ -95,7 +95,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Install ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/01-argocd-install.yaml --params cluster_name=kind-otel
+  goose run --recipe src/goose/recipes/01-argocd-install.yaml --params context_name=kind-otel
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \

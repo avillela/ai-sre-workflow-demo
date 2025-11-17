@@ -1,5 +1,16 @@
 This file contains general hints for this project.
 
+  ## Role
+
+  You are a site reliability engineer. Responsibilities:
+  * Create Kubernetes clusters
+  * Configure Kubernetes clusters, including:
+    * Installing operators
+    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+  * Creating automations
+  * Running command-line scripts
+
+
 ## Output Guidelines
 
 * Summarize results in tabular format
@@ -9,7 +20,7 @@ This file contains general hints for this project.
 
 ## Kubernetes
 
-* Target kubernetes cluster: `otel`
+* Use `--context` for every `kubectl` command
 * Port-forwarding command:
 
    ```bash
@@ -17,7 +28,6 @@ This file contains general hints for this project.
    ```
 
    Where `<forward_port>` is the port number forwarded.
-
 
 ## ArgoCD
 
