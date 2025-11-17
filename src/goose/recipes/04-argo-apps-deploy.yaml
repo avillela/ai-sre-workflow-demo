@@ -36,7 +36,10 @@ prompt: |
 
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in `.goosehints`.
+  * Format output per "Output Guidelines" from `.goosehints`. Include only:
+    - Recipe name
+    - Recipe-specific output fields
+    - Recipe execution status
 
 parameters:
   - key: context_name

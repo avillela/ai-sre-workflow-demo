@@ -133,7 +133,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe  src/goose/recipes/sub_recipes/argo-mcp-test.yaml
