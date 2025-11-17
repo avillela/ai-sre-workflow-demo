@@ -107,7 +107,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Deploy OTel Demo to k8s via ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml
+  goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml --params context_name=kind-otel
 
 # Query OTel data in Dynatrace using natural language prompts
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
@@ -130,7 +130,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-generation.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml

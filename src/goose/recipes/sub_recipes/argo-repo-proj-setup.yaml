@@ -3,41 +3,41 @@ title: Register ArgoCD repo and create project
 description: Register a repo in ArgoCD, and create a projet for the OTel Demo.
 instructions: |
 
-  Your goal is to prepare ArgoCD to manage the deployment of the OpenTelemetry Demo app.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Kubernetes Guidance
+
+  Apply `--context {{ context_name }}` to each `kubectl` command
+
+  ## ArgoCD Guidance
+
+  ### Register the project repository
+
+  ```bash
+  argocd repo add git@github.com:avillela/ai-sre-workflow-demo.git --ssh-private-key-path $SSH_PK_PATH --name ai-orchestration-playground
+  ```
+
 
 prompt: |
 
-  ## Role
+  ## Objective
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
-
-  To set up ArgoCD so that it can be used to manage the depoyment of the OpenTelemetry Demo.
+  Set up ArgoCD so that it can be used to manage the depoyment of the OpenTelemetry Demo.
 
   Steps:
-  1. Register the project repository in ArgoCD:
-
-    ```bash
-    argocd repo add git@github.com:avillela/ai-sre-workflow-demo.git --ssh-private-key-path $SSH_PK_PATH --name ai-orchestration-playground
-    ```
-
-  2. Create the ArgoCD project to deploy the OTel Demo
+  1. Log into ArgoCD using the `argocd` CLI
+    * ArgoCD server: the value of the environment variable ARGOCD_BASE_URL
+    * `password`: the value of the environment variable ARGOCD_PASSWORD
+  2. Register the project repository in ArgoCD:
+  3. Create the ArgoCD project to deploy the OTel Demo
     * Apply the file `src/argocd/projects/otel-demo-project.yaml` to the `argocd` namespace in Kubernetes, using `kubectl`
-
-
-  3. Deploy cert-manager to Kubernetes, managed by ArgoCD
+  4. Deploy cert-manager to Kubernetes, managed by ArgoCD
     * Apply the file `src/argocd/apps/cert-manager-helm-app.yaml` to the `argocd` namespace in Kubernetes, using `kubectl`
     * Sync the `cert-manager` ArgoCD app
-    * Wait until the app state is synced
-
-  4. Deploy the OpenTelemetry Operator to Kubernetes, managed by ArgoCD
+    * Wait until the app state is synced before moving on to the next step
+  5. Deploy the OpenTelemetry Operator to Kubernetes, managed by ArgoCD
     * Apply the file `src/argocd/apps/otel-operator-helm-app.yaml` to the `argocd` namespace in Kubernetes, using `kubectl`
     * Sync the `otel-operator` ArgoCD app
     * Wait until the app state is synced
@@ -45,15 +45,28 @@ prompt: |
 
   ## Source
 
+  ArgoCD CLI resources:
+  * ArgoCD login: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
   * Sync ArgoCD app: https://argo-cd.readthedocs.io/en/latest/user-guide/commands/argocd_app_sync/
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
   * Status of ArgoCD repo creation (success/failed)
   * Status of ArgoCD project creation (success/failed)
-  * Status of `cert-manager` app deployment in ArgoCD (healthy/unhealthy, synced/not synced)
-  * Status of `otel-operator` app deployment in ArgoCD (healthy/unhealthy, synct/not synced)
+  * Status of `cert-manager` app deployment in ArgoCD. Report on:
+    - health: healthy/unhealthy
+    - sync status: synced/not synced
+  * Status of `otel-operator` app deployment in ArgoCD. Report on:
+    - health: healthy/unhealthy
+    - sync status: synct/not synced
+
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 extensions:
 - type: builtin

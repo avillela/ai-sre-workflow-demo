@@ -9,7 +9,7 @@ instructions: |
 
 prompt: |
 
-  ## Objectives
+  ## Objective
 
   Install ArgoCD in Kubernetes.
 
