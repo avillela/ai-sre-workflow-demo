@@ -99,7 +99,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/02-argocd-bootstrap.yaml
+  goose run --recipe src/goose/recipes/02-argocd-bootstrap.yaml --params context_name=kind-otel
 
 # Generate ArgoCD API token (to use ArgoCD MCP server)
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
@@ -121,7 +121,7 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-cli-install.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argocd-password-update.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-password-update.yaml --params context_name=kind-otel
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-config.yaml

@@ -3,23 +3,15 @@ title: ArgoCD CLI installation
 description: Install the ArgoCD CLI
 instructions: |
   
-  Your job is to install the ArgoCD CLI.
+  ## Role
+  
+  Use role from `.goosehints`.
 
 prompt: |
 
-  ## Role
+  ## Objective
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
-
-  Your objective is to install the {{ cli_name }} CLI.
+  Install the {{ cli_name }} CLI.
 
   Steps:
   1. Check to see if {{ cli_name }} already exists in {{ target_directory }}. If it does skip the subsequent steps in this section.
@@ -34,8 +26,8 @@ prompt: |
 
   ## Output
 
-  Upon completion, print the following as per the "Output Guidelines" in `.goosehints`:
-  * Status of CLI installation (success/failed)
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Status of CLI installation: success/failed
   * CLI installation location
   * Architecture of target machine
   * Results of running `{{ cli_name }} version`

@@ -3,13 +3,16 @@ title: Bootstrap ArgoCD.
 description: Bootstrap ArgoCD for use.
 instructions: |
   
-  Your job is to bootstrap argocd, preparing the environment for use. It includes setting up port-forwarding, resetting the argocd password from the initial password
-
+  ## Role
+  
+  Use role from `.goosehints`.
+  
 sub_recipes:
   - name: "port_forward"
     path: "./sub_recipes/port-forward.yaml"
     values:
       forward_port: "9080"
+      context_name: "{{ context_name }}"
   - name: "cli_install"
     path: "./sub_recipes/argocd-cli-install.yaml"
     values:
@@ -17,6 +20,15 @@ sub_recipes:
       cli_name: "argocd"
   - name: "password_update"
     path: "./sub_recipes/argocd-password-update.yaml"
+    values:
+      context_name: "{{ context_name }}"
+
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 extensions:
 - type: builtin
@@ -29,30 +41,21 @@ extensions:
 
 prompt: |
 
-  ## Role
+  ## Objective
 
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
+  Prepare the ArgoCD environment by running the sub-recipes sequentially.
 
-
-  ## Objectives
-
-  Prepare the argocd environment by running the sub-recipes sequentially.
-
-  Run the sub-recipes in this order: 
+  Sub-recipe order: 
     1. port_forward
     2. cli_install
     3. password_update
-    
-    
+
   ## Output
 
-  Summarize results after each sub-recipe executes, and then summarize overall results as per the "Output Guidelines" in `.goosehints`.
+  * Format output per "Output Guidelines" from `.goosehints`. Include only:
+    - Recipe name
+    - Recipe-specific output fields
+    - Recipe execution status
 
 settings:
   goose_provider: github_copilot

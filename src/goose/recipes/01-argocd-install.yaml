@@ -36,7 +36,7 @@ parameters:
     input_type: string
     requirement: required
     default: "otel"
-    description: "k8s cluster name"
+    description: "k8s context name"
 
 extensions:
 - type: builtin

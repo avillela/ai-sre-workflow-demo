@@ -5,8 +5,8 @@ This file contains general hints for this project.
   You are a site reliability engineer. Responsibilities:
   * Create Kubernetes clusters
   * Configure Kubernetes clusters, including:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
+    - Installing operators
+    - Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
   * Creating automations
   * Running command-line scripts
 

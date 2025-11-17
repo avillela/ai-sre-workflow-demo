@@ -3,38 +3,35 @@ title: ArgoCD port forward
 description: Create an ArgoCD port forward
 instructions: |
   
-  Your job is to create a port forward that runs in the background.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Port-forward command
+
+  ```bash
+  nohup kubectl --context {{ context_name }} port-forward svc/argocd-server -n argocd {{ forward_port }}:443 > portforward.log 2>&1 &
+  ```
+
 
 prompt: |
   
-  ## Role
-
-  You are a site reliability engineer. Your role is to:
-  * Create Kubernetes clusters
-  * Configure Kubernetes clusters. This includes:
-    * Installing operators
-    * Deploying Kubernetes manifest YAML files using Helm charts and `kubectl`
-  * Creating automations
-  * Running scripts on the command line
-
-  ## Objectives
+  ## Objective
   
-  Create a kubernetes port forward that runs in the background, to enable access to the ArgoCD admin console.
+  * Create a kubernetes port forward, to enable access to the ArgoCD admin console.
+  * The port-forward MUST run as a background process
 
   Steps:
   1. Check to see if there is a port-forward currently running on port {{ forward_port }}. If there is an existing port-forward, abort.
-  2. Run this command:
+  2. Create the port-forward using the port-forward command provided in the instructions
   
-    ```bash
-    nohup kubectl port-forward svc/argocd-server -n argocd {{ forward_port }}:443 > portforward.log 2>&1 &
-    ```
-
   ## Output
 
-  Upon completion, print of the following as per the "Output Guidelines" in `.goosehints`:
-  * Status of port-forward (success/failed)
-  * Name of port being forwarded
-  * Command used for port-forward (if the port-forward was successful)
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Previous port-forward (did one alerady exist?): yes/no
+  * New port-forward created?: yes/no
+  * Port # being forwarded
+  * Command used for port-forward (only if new one was created)
 
 parameters:
   - key: forward_port
@@ -42,6 +39,11 @@ parameters:
     requirement: required
     default: "9080"
     description: "ArgoCD port forward"
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 extensions:
 - type: builtin
