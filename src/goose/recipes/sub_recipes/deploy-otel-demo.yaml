@@ -1,11 +1,66 @@
 version: 1.0.0
 title: Deploy the OTel Demo App
 description: Deploy the OTel Demo app managed by ArgoCD.
-instructions: Execute system-level scripts and automation tasks, ensuring environment variables are correctly passed and required scripts are made executable. Extract operation logs in a concise format, focusing on critical task outcomes, such as resource creation and status synchronization. Use specific tools like shell commands while adhering to predefined standards for managing Kubernetes resources and configurations.
-prompt: |
-  Execute script ./src/scripts/otel-demo-deploy.sh, passing in the value of the environment variables DT_API_TOKEN and DT_OTLP_ENDPOINT as the first and second parameters, respectively. If argocd reports an 'OutOfSync' error on the previous step, re-apply argocd app sync otel-demo.
+instructions: |
 
-  Summarize the results.
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Kubernetes Guidance
+
+  Apply `--context {{ context_name }}` to each `kubectl` command
+
+  ### Create Kubernetes secret from values
+
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: <SECRET_NAME>
+    namespace: <NAMESPACE>
+  type: Opaque
+  stringData:
+    DT_TOKEN: <DT_API_TOKEN>
+    DT_ENV: <DT_OTLP_ENDPOINT>
+  EOF
+  ```
+
+prompt: |
+
+  ## Objective
+
+  Deploy the OpenTelemetry Demo app on Kubernetes.
+
+  Steps:
+  1. Log into ArgoCD using the `argocd` CLI
+    * ArgoCD server: the value of the environment variable ARGOCD_BASE_URL
+    * `password`: the value of the environment variable ARGOCD_PASSWORD
+  2. Create a namespace in Kubernetes called `otel-demo`
+  3. Create a Kubernetes secret using the guidance from the instructions:
+    * `name`: otel-collector-secret
+    * `namespace`: otel-demo
+    * `DT_TOKEN`: the value of the environment variable DT_API_TOKEN
+    * `DT_ENV`: the value of the environment variable DT_OTLP_ENDPOINT
+  4. Deploy the OTel demo to Kubernetes, managed by ArgoCD
+      * Apply the file `src/argocd/apps/src/argocd/apps/otel-demo-app.yaml` to the `argocd` namespace in Kubernetes, using `kubectl`
+      * Sync the `otel-demo` ArgoCD app
+      * Wait until the app state is synced before marking this step "completed"
+    
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Status of `otel-demo` app deployment in ArgoCD. Report on:
+    - health: healthy/unhealthy
+    - sync status: synced/not synced
+
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
 
 extensions:
 - type: builtin
@@ -16,11 +71,9 @@ extensions:
   bundled: true
   available_tools: []
 
-activities:
-- Run Kubernetes setup scripts
-- Check resource synchronization status
-- Pass environment variables to scripts
-- Parse and summarize deployment outputs
-- Handle permissions and annotations for resources
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela

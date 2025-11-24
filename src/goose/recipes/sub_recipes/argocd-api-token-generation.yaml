@@ -1,0 +1,77 @@
+version: 1.0.0
+title: Generate ArgoCD API token
+description: Generate an ArgoCD API token for the admin account
+instructions: |
+
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Testing the ArgoCD API token
+
+  Test command:
+  ```bash
+  argocd cluster list --server <ARGOCD_BASE_URL> --auth-token <ARGOCD_API_TOKEN>
+  ```
+
+prompt: |
+
+  ## Must follow
+
+  * Do NOT create a port-forward, because it already exists!
+  * The ArgoCD admin account already has token-generation capabilities. Do NOT patch the `argocd-cm` configmap.
+
+  ## Objective
+
+  Generate an ArgoCD API token for the `admin` account and save the new value to {{ env_file }}.
+
+  Steps:
+  1. Log into ArgoCD using the `argocd` CLI
+    * ArgoCD server: the value of the environment variable ARGOCD_BASE_URL
+    * `password`: the value of the environment variable ARGOCD_PASSWORD
+  2. Generate the API token
+    * account: `admin`
+  3. Check if ARGOCD_API_TOKEN exists in {{ env_file }}
+    * If yes: delete the existing line starting with ARGOCD_API_TOKEN
+    * If no: append a new key/value pair to the end of {{ env_file }}:
+      - key: ARGOCD_API_TOKEN
+      - value: the API token from step 2, enclosed in double quotes
+  4. Run a test to make sure that the newly-created ArgoCD API token works.
+    * Use the test command provided in the instructions
+
+  ## Source
+
+  ArgoCD CLI resources:
+  * ArgoCD login: https://argo-cd.readthedocs.io/en/stable/getting_started/#4-login-using-the-cli
+  * Generate ArgoCD API token: https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd_account_generate-token/
+
+
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Token generation status: success/failed
+  * String replacement status in {{ env_file }}: success/failed
+  * Command used to test the ArgoCD API token, and its results
+
+parameters:
+  - key: env_file
+    input_type: string
+    requirement: required
+    default: "src/goose/config/.env"
+    description: "Env file path (including .env file)"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.3
+author:
+  contact: avillela

@@ -1,9 +1,51 @@
 version: 1.0.0
 title: ArgoCD port forward
 description: Create an ArgoCD port forward
-instructions: To establish a reliable port-forward connection between a local machine and a Kubernetes service, we utilize `kubectl port-forward`, running it with `nohup` to persist the process after logouts. We ensure outputs are redirected to a log file for monitoring, and run the command in the background using '&'. Logs can be reviewed as needed using standard shell utilities (e.g., `cat`). This process is useful for debugging, accessing services locally, or establishing a temporary connection to a cluster service. Custom ports and namespaces can be configured depending on the use case.
+instructions: |
+  
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Port-forward command
+
+  ```bash
+  nohup kubectl --context {{ context_name }} port-forward svc/argocd-server -n argocd {{ forward_port }}:443 > portforward.log 2>&1 &
+  ```
+
+
 prompt: |
-  Run this: nohup kubectl port-forward svc/argocd-server -n argocd 9080:443 > portforward.log 2>&1 &
+  
+  ## Objective
+  
+  * Create a kubernetes port forward, to enable access to the ArgoCD admin console.
+  * The port-forward MUST run as a background process
+
+  Steps:
+  1. Is there port-forward currently running on port {{ forward_port }}?
+    * If yes: delete the existing port-forward on {{ forward_port }} and proceed to step 2
+  2. Create the port-forward using the port-forward command provided in the instructions
+  
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Previous port-forward (did one alerady exist?): yes/no
+  * New port-forward created?: yes/no
+  * Port # being forwarded
+  * Command used for port-forward (only if new one was created)
+
+parameters:
+  - key: forward_port
+    input_type: string
+    requirement: required
+    default: "9080"
+    description: "ArgoCD port forward"
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
+
 extensions:
 - type: builtin
   name: developer
@@ -13,11 +55,9 @@ extensions:
   bundled: true
   available_tools: []
 
-activities:
-- Port-forward to Kubernetes service
-- Run persistent background processes
-- Redirect command logs to file
-- Monitor port-forward logs
-- Access Kubernetes services locally
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
 author:
   contact: avillela

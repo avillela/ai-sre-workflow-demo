@@ -1,45 +1,27 @@
 version: 1.0.0
-title: 
-description: Deploy ArgoCD apps
+title: Bootstrap ArgoCD.
+description: Bootstrap ArgoCD for use.
 instructions: |
-
+  
   ## Role
   
   Use role from `.goosehints`.
-
+  
 sub_recipes:
   - name: "port_forward"
     path: "./sub_recipes/port-forward.yaml"
     values:
       forward_port: "9080"
       context_name: "{{ context_name }}"
-  - name: "argo_repo_proj_setup"
-    path: "./sub_recipes/argo-repo-proj-setup.yaml"
+  - name: "cli_install"
+    path: "./sub_recipes/argocd-cli-install.yaml"
     values:
-      ssh_pk_path: "~/.ssh/id_ed25519"
-      context_name: "{{ context_name }}"
-  - name: "deply_otel_demo"
-    path: "./sub_recipes/deploy-otel-demo.yaml"
+      target_directory: "~/.local/bin"
+      cli_name: "argocd"
+  - name: "password_update"
+    path: "./sub_recipes/argocd-password-update.yaml"
     values:
       context_name: "{{ context_name }}"
-
-prompt: |
-
-  ## Objective
- 
-  Use ArgoCD to manage the deployment of the OpenTelemetry Demo on Kubernetes by running the sub-recipes sequentially.
-  
-  Sub-recipe order:
-  1. port_forward
-  2. argo_repo_proj_setup
-  3. deply_otel_demo
-
-  ## Output
-
-  * Format output per "Output Guidelines" from `.goosehints`. Include only:
-    - Recipe name
-    - Recipe-specific output fields
-    - Recipe execution status
 
 parameters:
   - key: context_name
@@ -56,6 +38,24 @@ extensions:
   timeout: 300
   bundled: true
   available_tools: []
+
+prompt: |
+
+  ## Objective
+
+  Prepare the ArgoCD environment by running the sub-recipes sequentially.
+
+  Sub-recipe order: 
+    1. port_forward
+    2. cli_install
+    3. password_update
+
+  ## Output
+
+  * Format output per "Output Guidelines" from `.goosehints`. Include only:
+    - Recipe name
+    - Recipe-specific output fields
+    - Recipe execution status
 
 settings:
   goose_provider: github_copilot
