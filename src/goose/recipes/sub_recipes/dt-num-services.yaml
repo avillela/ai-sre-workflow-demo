@@ -1,0 +1,56 @@
+version: 1.0.0
+title: DT Service Prompt
+description: List services in the OpenTelemetry Demo App in Dynatrace
+instructions: |
+
+  ## Role
+  
+  You are a Site Reliability Engineer tasked with troubleshooting data in Dynatrace.
+
+
+  ## Service Query Guidance
+
+
+  ```
+  fetch dt.entity.service | sort entity.name
+  ```
+
+prompt: |
+
+  ## Objective
+
+  Get the names and number of services associated to the OpenTelemetry Demo app in Dynatrace.
+
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Print in alphabetical order. Include only:
+  * Service name
+
+
+extensions:
+# - type: builtin
+#   name: developer
+#   display_name: Developer Tools
+#   description: null
+#   timeout: 300
+#   bundled: true
+#   available_tools: []
+- type: stdio
+  name: Dynatrace MCP
+  cmd: npx
+  args:
+  - -y
+  - '@dynatrace-oss/dynatrace-mcp-server@v0.13.0'
+  envs: {}
+  env_keys: []
+  timeout: 300
+  description: null
+  bundled: null
+  available_tools: []
+
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela

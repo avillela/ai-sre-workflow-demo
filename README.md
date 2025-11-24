@@ -138,6 +138,9 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe  src/goose/recipes/sub_recipes/argo-mcp-test.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe  src/goose/recipes/sub_recipes/dt-num-services.yaml
 ```
 
 ## Gotchas
