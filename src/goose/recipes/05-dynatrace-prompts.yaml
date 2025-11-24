@@ -17,7 +17,7 @@ extensions:
   cmd: npx
   args:
   - -y
-  - '@dynatrace-oss/dynatrace-mcp-server@v0.4.0'
+  - '@dynatrace-oss/dynatrace-mcp-server@latest'
   envs: {}
   env_keys: []
   timeout: 300

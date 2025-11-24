@@ -1,0 +1,54 @@
+version: 1.0.0
+title: Install ArgoCD
+description: Install ArgoCD in the designated Kubernets cluster
+instructions: |
+  
+  ## Role
+  
+  Use role from `.goosehints`.
+
+prompt: |
+
+  ## Objective
+
+  Install ArgoCD in Kubernetes.
+
+  Guidance:
+  * Use kubernetes context {{ context_name }}
+  * Create `argocd` namespace before installing ArgoCD
+  * ArgoCD Version: use ArgoCD version specified in `.goosehints`
+  
+  ### ArgoCD installation guidance
+
+  * Wait until all 7 pods in the `argocd` namespace are in "running" status and ready "1/1",
+  * Once above criteria are met, then the ArgoCD installation is complete
+
+  # Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Summary of names and status of the following Kubernetes objects in the `argocd` namespace in tabular form:
+    * services
+    * deployments
+    * statefulsets
+
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela

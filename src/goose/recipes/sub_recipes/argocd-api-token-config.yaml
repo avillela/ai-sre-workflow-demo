@@ -1,0 +1,70 @@
+version: 1.0.0
+title: Generate ArgoCD API token
+description: Generate an ArgoCD API token for the admin account
+instructions: |
+  
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Verify the patch to the `argocd-cm` configmap
+
+  ```bash
+    kubectl --context {{ context_name }} get configmap argocd-cm -n argocd -o jsonpath='{.data.accounts\.admin}'
+  ```
+  
+  Expected output: `apiKey`.
+
+prompt: |
+
+  ## Objective
+
+  Enable argocd to generate an API token for the admin account.
+  
+  Steps:
+  1. Patch the `argocd-cm` configmap:
+    - context: {{ context_name }}
+    - namespace: `argocd`
+    - type: `merge`
+    - add the following to the configmap `{"data": {"accounts.admin": "apiKey"}}`
+  2. Restart `argocd-server`:
+    - context: {{ context_name }}
+    - namespace: `argocd`
+  3. Make sure that the new `argocd-server` pod has started. Check:
+    - status: "running"
+    - ready: "1/1"
+    Do NOT go to Step 4 until both criteria are fulfilled.
+  4. Verify the `argocd-cm` patch
+    
+  ## Source
+
+  How to patch `argocd-cm`: https://docs.opsmx.com/opsmx-intelligent-software-delivery-isd-platform-argo/additional-resources/create-api-token-in-argo-cd#generate-token-from-argo-cd-ui
+
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+  * Status of patch (success/failed)
+  * Status of `argocd-server` (running/not running)
+
+parameters:
+  - key: context_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "k8s context name"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela

@@ -85,21 +85,30 @@ The commands below run the Goose recipes for bootstrapping Kubernetes (KinD) and
 
 ```bash
 
-# Create k8s cluster and install ArgoCD
+# Create k8s KinD cluster
+K8S_CONTEXT="kind-otel"
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/01-k8s-setup.yaml
+  goose run --recipe src/goose/recipes/00-k8s-kind-cluster-create.yaml
+
+# Create k8s GKE cluster
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/00-k8s-gke-cluster-create.yaml
+
+# Install ArgoCD
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/01-argocd-install.yaml --params context_name=$K8S_CONTEXT
 
 # Update the ArgoCD password
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/02-argo-bootstrap.yaml
+  goose run --recipe src/goose/recipes/02-argocd-bootstrap.yaml --params context_name=$K8S_CONTEXT
 
 # Generate ArgoCD API token (to use ArgoCD MCP server)
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/03-argo-api-token.yaml
+  goose run --recipe src/goose/recipes/03-argocd-api-token.yaml --params context_name=$K8S_CONTEXT
 
 # Deploy OTel Demo to k8s via ArgoCD
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml
+  goose run --recipe src/goose/recipes/04-argo-apps-deploy.yaml --params context_name=$K8S_CONTEXT
 
 # Query OTel data in Dynatrace using natural language prompts
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
@@ -107,16 +116,31 @@ export $(grep -v '^#' src/goose/config/.env | xargs) && \
 
 # FOR TESTING: Sub-recipes
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/port-forward.yaml --params context_name=$K8S_CONTEXT
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-cli-install.yaml
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
-  goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-password-update.yaml --params context_name=$K8S_CONTEXT
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-config.yaml --params context_name=$K8S_CONTEXT
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/argocd-api-token-generation.yaml --params context_name=$K8S_CONTEXT
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/argo-repo-proj-setup.yaml --params context_name=$K8S_CONTEXT
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe src/goose/recipes/sub_recipes/deploy-otel-demo.yaml --params context_name=$K8S_CONTEXT
 
 export $(grep -v '^#' src/goose/config/.env | xargs) && \
   goose run --recipe  src/goose/recipes/sub_recipes/argo-mcp-test.yaml
+
+export $(grep -v '^#' src/goose/config/.env | xargs) && \
+  goose run --recipe  src/goose/recipes/sub_recipes/dt-num-services.yaml
 ```
 
 ## Gotchas

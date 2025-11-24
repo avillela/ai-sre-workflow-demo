@@ -1,0 +1,94 @@
+version: 1.0.0
+title: Create GKE Cluster
+description: Create Kubernetes GKE cluster
+instructions: |
+
+  ## Role
+  
+  Use role from `.goosehints`.
+
+  ## Google Cloud (GCP) & GKE Guidance
+
+  ### Set GCP project
+  
+  Sample command:
+
+  ```bash
+  gcloud config set project <GCP_PROJECT_NAME>
+  ```
+
+  ### Create GKE cluster
+
+  Sample command:
+
+  ```bash
+  gcloud container clusters create {{ cluster_name }} \
+  --zone <GCP_ZONE> \
+  --machine-type=<GKE_MACHINE_TYPE> \
+  --num-nodes=<GKE_NUM_NODES> \
+  --monitoring=NONE --logging=NONE
+  ```
+
+  ### Add GKE cluster to `kubectl` context:
+
+  Sample command:
+
+  ```bash
+  gcloud container clusters get-credentials {{ cluster_name }} --region <REGION> --project <PROJECT_ID>
+  ```
+  
+prompt: |
+
+  ## Objective
+
+  Create a GKE cluster named {{ cluster_name }} using the `gcloud` CLI tool.
+
+  Steps:
+  1. Set GCP project
+    * project name: the value of environment variable GCP_PROJECT_NAME
+  2. Create a GKE cluster based on the following criteria:
+    * name: {{ cluster_name }}
+    * zone: the value of environment variable GCP_ZONE
+    * machine type: the value of environment variable GKE_MACHINE_TYPE
+    * num nodes: the value of environment variable GKE_NUM_NODES
+    * monitoring: NONE
+    * logging: NONE
+  3. Add GKE cluster to the local `kubectl` context:
+    * cluster name: {{ cluster_name }}
+    * zone: the value of environment variable GCP_ZONE
+
+  ## Source
+
+  How to create a GKE cluster: https://docs.cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster#gcloud_1
+
+  ## Output
+
+  Format output per "Output Guidelines" from `.goosehints`. Include only:
+    * GCP project name
+    * Cluster name
+    * kubectl context name
+    * Version of Kubernetes installed
+    * Number of nodes running
+    * Command used to create the GKE cluster
+
+parameters:
+  - key: cluster_name
+    input_type: string
+    requirement: required
+    default: "otel"
+    description: "Name of KinD cluster"
+
+extensions:
+- type: builtin
+  name: developer
+  display_name: Developer Tools
+  description: null
+  timeout: 300
+  bundled: true
+  available_tools: []
+settings:
+  goose_provider: github_copilot
+  # goose_model: claude-sonnet-4.5
+  temperature: 0.5
+author:
+  contact: avillela

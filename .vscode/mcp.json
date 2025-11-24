@@ -4,7 +4,7 @@
     "npx-dynatrace-mcp-server": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@v0.3.0"],
+      "args": ["-y", "@dynatrace-oss/dynatrace-mcp-server@latest"],
       "envFile": "${workspaceFolder}/.env"
     },
 
@@ -19,27 +19,6 @@
         "-e",
         "GITHUB_PERSONAL_ACCESS_TOKEN",
         "ghcr.io/github/github-mcp-server"
-      ],
-      "envFile": "${workspaceFolder}/.env"
-    },
-    "shell": {
-      "type": "stdio",
-      "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "mcp-shell:latest"
-      ],
-      "envFile": "${workspaceFolder}/.env"
-    },
-
-    // Reference: https://github.com/MladenSU/cli-mcp-server
-    "mcp-cli-exec": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": [
-        "cli-mcp-server"
       ],
       "envFile": "${workspaceFolder}/.env"
     },
